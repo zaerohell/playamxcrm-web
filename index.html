@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>PlayaMXCRM — Inteligencia para el Mercado Inmobiliario</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#000;--bg2:#0a0a0a;--bg3:#111;
+  --border:rgba(255,255,255,0.08);
+  --text:#f5f5f7;--text2:#a1a1a6;--text3:#6e6e73;
+  --accent:#0071e3;--accent2:#30d158;--accent3:#ff9f0a;--accent4:#bf5af2;
+  --radius:20px;
+}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden;line-height:1.5}
+
+nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(0,0,0,0.72);backdrop-filter:blur(20px) saturate(180%);border-bottom:0.5px solid var(--border);padding:0 24px;height:52px;display:flex;align-items:center;justify-content:space-between}
+.nav-logo{font-size:17px;font-weight:700;letter-spacing:-0.5px;color:var(--text)}
+.nav-logo span{color:var(--accent)}
+.nav-links{display:flex;gap:24px;list-style:none}
+.nav-links a{font-size:13px;color:var(--text2);text-decoration:none;transition:color .15s}
+.nav-links a:hover{color:var(--text)}
+.nav-cta{font-size:13px;font-weight:500;background:var(--accent);color:#fff;border:none;border-radius:99px;padding:6px 16px;cursor:pointer;text-decoration:none;transition:opacity .15s}
+.nav-cta:hover{opacity:.85}
+
+.hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:80px 24px 60px;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 50% 0%,rgba(0,113,227,0.15) 0%,transparent 70%);pointer-events:none}
+.hero-eyebrow{font-size:12px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);margin-bottom:20px}
+.hero-title{font-size:clamp(42px,7vw,88px);font-weight:900;letter-spacing:-2.5px;line-height:1.0;margin-bottom:24px}
+.hero-title em{font-style:normal;background:linear-gradient(135deg,#0071e3,#30d158,#bf5af2);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero-sub{font-size:clamp(17px,2.5vw,22px);color:var(--text2);max-width:620px;margin:0 auto 40px;font-weight:400;line-height:1.55}
+.hero-actions{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-bottom:60px}
+.btn-primary{font-size:15px;font-weight:500;background:var(--accent);color:#fff;border:none;border-radius:99px;padding:14px 32px;cursor:pointer;text-decoration:none;transition:all .2s}
+.btn-primary:hover{background:#0077ed;transform:scale(1.02)}
+.btn-ghost{font-size:15px;font-weight:500;background:rgba(255,255,255,0.08);color:var(--text);border:0.5px solid var(--border);border-radius:99px;padding:14px 32px;cursor:pointer;text-decoration:none;transition:all .2s}
+.btn-ghost:hover{background:rgba(255,255,255,0.12)}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;font-size:12px;color:var(--text3);border:0.5px solid var(--border);border-radius:99px;padding:6px 14px;margin-bottom:28px}
+.hero-badge .dot{width:7px;height:7px;border-radius:50%;background:var(--accent2);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.5}}
+
+.mll-section{padding:100px 24px;text-align:center;background:var(--bg)}
+.section-eyebrow{font-size:11px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--accent);margin-bottom:16px}
+.section-title{font-size:clamp(32px,5vw,56px);font-weight:800;letter-spacing:-1.5px;line-height:1.08;margin-bottom:20px}
+.section-sub{font-size:17px;color:var(--text2);max-width:560px;margin:0 auto 60px;line-height:1.6}
+.mll-card-big{max-width:900px;margin:0 auto;background:linear-gradient(135deg,rgba(0,113,227,0.12),rgba(191,90,242,0.08));border:0.5px solid rgba(0,113,227,0.25);border-radius:var(--radius);padding:60px;position:relative;overflow:hidden}
+.mll-card-big::before{content:'';position:absolute;top:-40px;right:-40px;width:280px;height:280px;background:radial-gradient(circle,rgba(0,113,227,0.15),transparent 70%);border-radius:50%;pointer-events:none}
+.mll-chat{background:rgba(0,0,0,0.5);border:0.5px solid var(--border);border-radius:14px;padding:20px;text-align:left;max-width:600px;margin:0 auto}
+.chat-row{display:flex;gap:10px;align-items:flex-start;margin-bottom:14px}
+.chat-row:last-child{margin-bottom:0}
+.chat-av{width:28px;height:28px;border-radius:8px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:13px}
+.av-ai{background:rgba(0,113,227,0.25);border:0.5px solid rgba(0,113,227,0.4)}
+.av-u{background:rgba(255,255,255,0.08)}
+.chat-bubble{font-size:13px;line-height:1.55;color:var(--text);padding:9px 12px;border-radius:10px;background:rgba(255,255,255,0.06);border:0.5px solid var(--border)}
+.chat-bubble.ai{background:rgba(0,113,227,0.12);border-color:rgba(0,113,227,0.2)}
+.chat-data{margin-top:8px;background:rgba(0,0,0,0.4);border:0.5px solid var(--border);border-radius:8px;padding:10px 12px}
+.data-row{display:flex;justify-content:space-between;font-size:11.5px;padding:3px 0;border-bottom:0.5px solid rgba(255,255,255,0.05)}
+.data-row:last-child{border:none}
+.data-row .dl{color:var(--text3)}
+.data-row .dv{font-weight:500}
+.dv.g{color:var(--accent2)}.dv.b{color:#58a6ff}.dv.r{color:#f85149}.dv.o{color:var(--accent3)}
+
+.features{padding:80px 24px;max-width:1100px;margin:0 auto}
+.feat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px}
+.feat-card{background:var(--bg3);border:0.5px solid var(--border);border-radius:var(--radius);padding:36px;transition:transform .2s,border-color .2s}
+.feat-card:hover{transform:translateY(-3px);border-color:rgba(255,255,255,0.15)}
+.feat-icon{width:48px;height:48px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:20px}
+.feat-title{font-size:20px;font-weight:700;letter-spacing:-0.4px;margin-bottom:10px}
+.feat-desc{font-size:14px;color:var(--text2);line-height:1.65}
+.feat-badge{display:inline-flex;align-items:center;gap:5px;font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;padding:3px 8px;border-radius:99px;margin-top:14px}
+
+.mod-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px;margin-top:48px}
+.mod-item{background:var(--bg3);border:0.5px solid var(--border);border-radius:14px;padding:20px;display:flex;gap:12px;align-items:flex-start}
+.mod-icon{font-size:22px;flex-shrink:0;margin-top:2px}
+.mod-name{font-size:13px;font-weight:600;color:var(--text);margin-bottom:4px}
+.mod-desc{font-size:11.5px;color:var(--text3);line-height:1.5}
+.mod-tag{font-size:9px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:2px 7px;border-radius:99px;margin-top:6px;display:inline-block}
+.tag-new{background:rgba(48,209,88,0.15);color:#30d158}
+.tag-ai{background:rgba(0,113,227,0.18);color:#58a6ff}
+.tag-core{background:rgba(255,255,255,0.07);color:var(--text3)}
+.tag-legal{background:rgba(191,90,242,0.15);color:#bf5af2}
+.tag-sec{background:rgba(255,159,10,0.15);color:#ff9f0a}
+
+.stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1px;background:var(--border);border:0.5px solid var(--border);border-radius:var(--radius);overflow:hidden;margin-top:48px}
+.stat-cell{background:var(--bg3);padding:40px 24px;text-align:center}
+.stat-n{font-size:48px;font-weight:900;letter-spacing:-2px;line-height:1}
+.stat-l{font-size:13px;color:var(--text2);margin-top:8px;font-weight:400}
+
+.belt{padding:60px 24px;background:var(--bg2);border-top:0.5px solid var(--border);border-bottom:0.5px solid var(--border)}
+.belt-inner{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:24px}
+.belt-item{display:flex;align-items:flex-start;gap:14px}
+.belt-dot{width:36px;height:36px;border-radius:10px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:17px}
+.belt-label{font-size:13px;font-weight:600;color:var(--text);margin-bottom:3px}
+.belt-sub{font-size:11.5px;color:var(--text3);line-height:1.5}
+
+.comp-inner{max-width:900px;margin:0 auto}
+.comp-table{border:0.5px solid var(--border);border-radius:var(--radius);overflow:hidden;margin-top:48px}
+.comp-header{display:grid;grid-template-columns:1fr 1fr 1fr;background:var(--bg3);padding:16px 24px;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--text3)}
+.comp-header .h-mid{text-align:center;color:var(--text)}
+.comp-header .h-right{text-align:center;color:var(--accent)}
+.comp-row{display:grid;grid-template-columns:1fr 1fr 1fr;padding:14px 24px;border-top:0.5px solid var(--border);align-items:center;font-size:13.5px;transition:background .15s}
+.comp-row:hover{background:rgba(255,255,255,0.02)}
+.comp-row .feat-name{color:var(--text2)}
+.comp-row .old{text-align:center;color:var(--text3)}
+.comp-row .new-val{text-align:center;color:var(--accent2);font-weight:600}
+
+.alerts-card{max-width:760px;margin:48px auto 0;background:var(--bg3);border:0.5px solid var(--border);border-radius:var(--radius);overflow:hidden}
+.alert-row{display:flex;align-items:center;gap:14px;padding:18px 24px;border-bottom:0.5px solid var(--border)}
+.alert-row:last-child{border:none}
+.alert-icon{font-size:18px;width:36px;flex-shrink:0;text-align:center}
+.alert-body{flex:1}
+.alert-title{font-size:13.5px;font-weight:600;color:var(--text)}
+.alert-sub{font-size:11.5px;color:var(--text3);margin-top:3px;line-height:1.5}
+.alert-chip{font-size:10px;font-weight:700;padding:3px 9px;border-radius:99px;flex-shrink:0;letter-spacing:.04em}
+
+.cta-section{padding:100px 24px;text-align:center;position:relative;overflow:hidden}
+.cta-section::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 70% 50% at 50% 50%,rgba(0,113,227,0.12),transparent 70%);pointer-events:none}
+.cta-title{font-size:clamp(36px,5vw,64px);font-weight:900;letter-spacing:-2px;margin-bottom:20px;line-height:1.05}
+.cta-sub{font-size:18px;color:var(--text2);max-width:500px;margin:0 auto 40px;line-height:1.6}
+
+footer{background:var(--bg2);border-top:0.5px solid var(--border);padding:48px 24px 32px;text-align:center}
+.footer-logo{font-size:18px;font-weight:800;letter-spacing:-0.5px;margin-bottom:8px}
+.footer-logo span{color:var(--accent)}
+.footer-tagline{font-size:13px;color:var(--text3);margin-bottom:32px}
+.footer-links{display:flex;justify-content:center;gap:24px;flex-wrap:wrap;margin-bottom:28px}
+.footer-links a{font-size:12px;color:var(--text3);text-decoration:none;transition:color .15s}
+.footer-links a:hover{color:var(--text2)}
+.footer-legal{font-size:11px;color:var(--text3)}
+
+@media(max-width:600px){
+  nav{padding:0 16px}
+  .nav-links{display:none}
+  .hero{padding:80px 20px 40px}
+  .mll-card-big{padding:30px 20px}
+  .comp-header,.comp-row{grid-template-columns:1fr 1fr}
+  .comp-header .h-right,.comp-row .old{display:none}
+  .belt-inner{grid-template-columns:1fr}
+  .alert-row{flex-wrap:wrap}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">Playa<span>MX</span>CRM</div>
+  <ul class="nav-links">
+    <li><a href="#mll">Inteligencia IA</a></li>
+    <li><a href="#modulos">Módulos</a></li>
+    <li><a href="#alertas">Alertas</a></li>
+    <li><a href="#comparativa">Comparativa</a></li>
+    <li><a href="#contacto">Contacto</a></li>
+  </ul>
+  <a href="#contacto" class="nav-cta">Solicitar demo</a>
+</nav>
+
+<section class="hero">
+  <div class="hero-badge"><span class="dot"></span> v2026 · 49 módulos activos · Score 8.6/10</div>
+  <div class="hero-eyebrow">CRM Inmobiliario · Playa del Carmen, Q.Roo</div>
+  <h1 class="hero-title">El CRM que<br/><em>piensa contigo.</em></h1>
+  <p class="hero-sub">PlayaMXCRM es el primer sistema de gestión inmobiliaria para la Riviera Maya con inteligencia artificial integrada, alertas automáticas en tiempo real y cumplimiento legal local en cada módulo.</p>
+  <div class="hero-actions">
+    <a href="#contacto" class="btn-primary">Solicitar demo gratuita →</a>
+    <a href="#mll" class="btn-ghost">Ver cómo funciona</a>
+  </div>
+  <p style="font-size:12px;color:var(--text3)">Rentas · Ventas · Condominios · IA integrada · Playa del Carmen</p>
+</section>
+
+<section class="mll-section" id="mll">
+  <div class="section-eyebrow">Machine Learning Layer</div>
+  <h2 class="section-title">No solo gestiona.<br/>Ahora también razona.</h2>
+  <p class="section-sub">Mientras los CRM tradicionales almacenan datos, PlayaMXCRM los interpreta. El asistente MLL entiende tu pipeline, detecta riesgos y te dice exactamente qué hacer a continuación.</p>
+  <div class="mll-card-big">
+    <p style="font-size:12px;color:var(--text3);margin-bottom:16px;text-align:left">◎ Asistente MLL — datos en tiempo real</p>
+    <div class="mll-chat">
+      <div class="chat-row">
+        <div class="chat-av av-ai">◎</div>
+        <div>
+          <div class="chat-bubble ai">
+            Buenos días. Tengo 3 alertas activas para ti hoy:
+            <div class="chat-data">
+              <div class="data-row"><span class="dl">A/C sin resolver — Veleta 305</span><span class="dv r">HIGH · 2 días sin atender</span></div>
+              <div class="data-row"><span class="dl">Contrato Xcacel — vence pronto</span><span class="dv o">60 días restantes</span></div>
+              <div class="data-row"><span class="dl">Carlos Medina — PH-A</span><span class="dv g">2a visita hoy 15:00 ✓</span></div>
+            </div>
+            <div style="margin-top:8px;font-size:12px;color:#8b949e">¿Redacto el seguimiento para Medina o revisamos el pipeline primero?</div>
+          </div>
+        </div>
+      </div>
+      <div class="chat-row" style="flex-direction:row-reverse">
+        <div class="chat-av av-u">R</div>
+        <div class="chat-bubble">¿Cuál es la probabilidad real de cerrar con Medina esta semana?</div>
+      </div>
+      <div class="chat-row">
+        <div class="chat-av av-ai">◎</div>
+        <div>
+          <div class="chat-bubble ai">
+            Basado en el modelo de scoring y el historial:
+            <div class="chat-data">
+              <div class="data-row"><span class="dl">Score predictivo</span><span class="dv b">74 / 100</span></div>
+              <div class="data-row"><span class="dl">Probabilidad de cierre</span><span class="dv g">81%</span></div>
+              <div class="data-row"><span class="dl">Señal de compra</span><span class="dv g">HOT 🔥</span></div>
+              <div class="data-row"><span class="dl">Recomendación</span><span class="dv o">Contactar hoy antes 18h</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="modulos" style="padding:80px 24px 40px;text-align:center">
+  <div class="section-eyebrow">Características</div>
+  <h2 class="section-title">Tres CRMs en uno.</h2>
+  <p class="section-sub">Gestiona rentas, ventas y condominios desde una plataforma unificada. Con inteligencia artificial que trabaja para ti las 24 horas.</p>
+</section>
+
+<div class="features">
+  <div class="feat-grid">
+    <div class="feat-card">
+      <div class="feat-icon" style="background:rgba(0,113,227,0.12)">◎</div>
+      <div class="feat-title">Asistente MLL</div>
+      <p class="feat-desc">Pregunta en lenguaje natural. Recibe análisis del pipeline, redacción de contratos, alertas proactivas y estrategias de negociación — todo con datos reales de tu CRM.</p>
+      <div class="feat-badge" style="background:rgba(0,113,227,0.15);color:#58a6ff">● IA en tiempo real</div>
+    </div>
+    <div class="feat-card">
+      <div class="feat-icon" style="background:rgba(48,209,88,0.12)">🎯</div>
+      <div class="feat-title">Scoring Predictivo</div>
+      <p class="feat-desc">Modelo de 5 dimensiones que analiza cada comprador e inquilino. Predice probabilidades de cierre, detecta riesgos de impago y recomienda la siguiente acción.</p>
+      <div class="feat-badge" style="background:rgba(48,209,88,0.15);color:#30d158">● Machine Learning</div>
+    </div>
+    <div class="feat-card">
+      <div class="feat-icon" style="background:rgba(191,90,242,0.12)">⚖️</div>
+      <div class="feat-title">Asesor Legal IA</div>
+      <p class="feat-desc">Especializado en derecho inmobiliario de Quintana Roo. Zona restringida, fideicomiso Art. 27, ISR por enajenación, ISABI, créditos hipotecarios y Ley de Condominios Q.Roo.</p>
+      <div class="feat-badge" style="background:rgba(191,90,242,0.15);color:#bf5af2">● Claude AI</div>
+    </div>
+    <div class="feat-card">
+      <div class="feat-icon" style="background:rgba(255,159,10,0.12)">🏢</div>
+      <div class="feat-title">CRM Rentas</div>
+      <p class="feat-desc">Propietarios, inquilinos, contratos con depósito obligatorio, geolocalización de inmuebles, amenidades, scoring, portal de inquilinos, CFDI 4.0 y WhatsApp Business.</p>
+      <div class="feat-badge" style="background:rgba(255,255,255,0.07);color:#8e8e93">● Módulo completo</div>
+    </div>
+    <div class="feat-card">
+      <div class="feat-icon" style="background:rgba(255,69,58,0.12)">🏗️</div>
+      <div class="feat-title">CRM Ventas</div>
+      <p class="feat-desc">Pipeline visual 7 etapas, scoring de compradores, mapa satelital, contratos de promesa y compraventa, exportación CSV, brokers externos y tracking de comisiones.</p>
+      <div class="feat-badge" style="background:rgba(255,255,255,0.07);color:#8e8e93">● Módulo completo</div>
+    </div>
+    <div class="feat-card">
+      <div class="feat-icon" style="background:rgba(90,200,250,0.12)">🏛️</div>
+      <div class="feat-title">CRM Condominios</div>
+      <p class="feat-desc">Complejos, cuotas, asambleas, avisos, certificados de no adeudo PDF, presupuesto anual, plan de protección civil, cumplimiento LFPDPPP y constancias oficiales.</p>
+      <div class="feat-badge" style="background:rgba(255,255,255,0.07);color:#8e8e93">● Módulo completo</div>
+    </div>
+  </div>
+</div>
+
+<div class="belt">
+  <div class="belt-inner">
+    <div class="belt-item">
+      <div class="belt-dot" style="background:rgba(191,90,242,0.12)">🔒</div>
+      <div>
+        <div class="belt-label">2FA + Audit Log</div>
+        <div class="belt-sub">TOTP para administradores. Registro completo de cada acción en el sistema.</div>
+      </div>
+    </div>
+    <div class="belt-item">
+      <div class="belt-dot" style="background:rgba(255,159,10,0.12)">🚨</div>
+      <div>
+        <div class="belt-label">Protección Civil</div>
+        <div class="belt-sub">Plan de emergencias, rutas de evacuación y contactos de emergencia por complejo.</div>
+      </div>
+    </div>
+    <div class="belt-item">
+      <div class="belt-dot" style="background:rgba(48,209,88,0.12)">📋</div>
+      <div>
+        <div class="belt-label">LFPDPPP Art. 16</div>
+        <div class="belt-sub">Mecanismo de eliminación definitiva de datos personales, conforme a la ley federal.</div>
+      </div>
+    </div>
+    <div class="belt-item">
+      <div class="belt-dot" style="background:rgba(0,113,227,0.12)">⚡</div>
+      <div>
+        <div class="belt-label">Rate Limiting API</div>
+        <div class="belt-sub">Endpoints públicos protegidos. Respuesta 429 con retryAfter automático.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<section id="alertas" style="padding:100px 24px;background:var(--bg);text-align:center">
+  <div class="section-eyebrow">Alertas inteligentes</div>
+  <h2 class="section-title">El sistema que<br/>no duerme.</h2>
+  <p class="section-sub">Alertas automáticas por correo y notificaciones push en el navegador. Nunca pierdas un vencimiento, incidencia urgente o contrato por renovar.</p>
+  <div class="alerts-card">
+    <div class="alert-row">
+      <div class="alert-icon">⚡</div>
+      <div class="alert-body">
+        <div class="alert-title">Incidencias HIGH sin resolver</div>
+        <div class="alert-sub">Email automático al admin y propietario si una incidencia de alta prioridad lleva más de 48 horas abierta.</div>
+      </div>
+      <div class="alert-chip" style="background:rgba(255,69,58,0.15);color:#f85149">Inmediato · 48h</div>
+    </div>
+    <div class="alert-row">
+      <div class="alert-icon">📅</div>
+      <div class="alert-body">
+        <div class="alert-title">Vencimiento de contratos</div>
+        <div class="alert-sub">Notificaciones escalonadas a 90, 60, 30, 14, 7, 3 y 1 días antes. Admin, propietario e inquilino reciben el aviso en el momento correcto.</div>
+      </div>
+      <div class="alert-chip" style="background:rgba(255,159,10,0.15);color:#ff9f0a">90 → 1 día</div>
+    </div>
+    <div class="alert-row">
+      <div class="alert-icon">💰</div>
+      <div class="alert-body">
+        <div class="alert-title">Rentas vencidas</div>
+        <div class="alert-sub">Seguimiento automático a 1, 3, 7, 14 y 30 días de mora. Resumen financiero diario al administrador a las 8 AM.</div>
+      </div>
+      <div class="alert-chip" style="background:rgba(48,209,88,0.15);color:#30d158">Diario 8 AM</div>
+    </div>
+    <div class="alert-row">
+      <div class="alert-icon">🔔</div>
+      <div class="alert-body">
+        <div class="alert-title">Push notifications en el navegador</div>
+        <div class="alert-sub">Service Worker integrado. Las alertas críticas llegan al escritorio o celular incluso con el navegador en segundo plano.</div>
+      </div>
+      <div class="alert-chip" style="background:rgba(0,113,227,0.15);color:#58a6ff">Web Push API</div>
+    </div>
+    <div class="alert-row">
+      <div class="alert-icon">🏠</div>
+      <div class="alert-body">
+        <div class="alert-title">Inmuebles vacantes</div>
+        <div class="alert-sub">Alerta automática cuando un inmueble lleva más de 30 días sin ocupar, con sugerencias de acción para el propietario.</div>
+      </div>
+      <div class="alert-chip" style="background:rgba(191,90,242,0.15);color:#bf5af2">+30 días</div>
+    </div>
+  </div>
+</section>
+
+<section style="padding:60px 24px;background:var(--bg2)">
+  <div style="max-width:1100px;margin:0 auto">
+    <div style="text-align:center;margin-bottom:48px">
+      <div class="section-eyebrow">49 módulos operativos</div>
+      <h2 class="section-title" style="font-size:clamp(28px,4vw,44px)">Todo lo que necesitas, ya integrado.</h2>
+    </div>
+    <div class="mod-grid">
+      <div class="mod-item"><div class="mod-icon">◎</div><div><div class="mod-name">IA Asistente MLL</div><div class="mod-desc">Análisis conversacional en tiempo real</div><span class="mod-tag tag-ai">IA</span></div></div>
+      <div class="mod-item"><div class="mod-icon">🎯</div><div><div class="mod-name">Scoring Predictivo</div><div class="mod-desc">Compradores e inquilinos</div><span class="mod-tag tag-ai">IA</span></div></div>
+      <div class="mod-item"><div class="mod-icon">⚖️</div><div><div class="mod-name">Asesor Legal IA</div><div class="mod-desc">Derecho inmobiliario Q.Roo</div><span class="mod-tag tag-ai">IA</span></div></div>
+      <div class="mod-item"><div class="mod-icon">📄</div><div><div class="mod-name">PDF Ejecutivo</div><div class="mod-desc">Reportes automáticos del dashboard</div><span class="mod-tag tag-ai">IA</span></div></div>
+      <div class="mod-item"><div class="mod-icon">🚨</div><div><div class="mod-name">Protección Civil</div><div class="mod-desc">Rutas de evacuación por complejo</div><span class="mod-tag tag-new">Nuevo</span></div></div>
+      <div class="mod-item"><div class="mod-icon">📊</div><div><div class="mod-name">Presupuesto Anual</div><div class="mod-desc">Por complejo condominal</div><span class="mod-tag tag-new">Nuevo</span></div></div>
+      <div class="mod-item"><div class="mod-icon">🔒</div><div><div class="mod-name">LFPDPPP</div><div class="mod-desc">Eliminación definitiva de datos ARCO</div><span class="mod-tag tag-legal">Legal</span></div></div>
+      <div class="mod-item"><div class="mod-icon">🔔</div><div><div class="mod-name">Push Notifications</div><div class="mod-desc">Service Worker + alertas DANGER</div><span class="mod-tag tag-new">Nuevo</span></div></div>
+      <div class="mod-item"><div class="mod-icon">🗺️</div><div><div class="mod-name">Geolocalización</div><div class="mod-desc">lat/lng + amenidades por inmueble</div><span class="mod-tag tag-new">Nuevo</span></div></div>
+      <div class="mod-item"><div class="mod-icon">⬇</div><div><div class="mod-name">CSV Universal</div><div class="mod-desc">Exportación en todos los módulos</div><span class="mod-tag tag-new">Nuevo</span></div></div>
+      <div class="mod-item"><div class="mod-icon">🛡</div><div><div class="mod-name">Rate Limiting</div><div class="mod-desc">Endpoints públicos protegidos</div><span class="mod-tag tag-sec">Seguridad</span></div></div>
+      <div class="mod-item"><div class="mod-icon">🗳️</div><div><div class="mod-name">Asambleas & Votos</div><div class="mod-desc">Condominios en tiempo real</div><span class="mod-tag tag-core">Core</span></div></div>
+      <div class="mod-item"><div class="mod-icon">💳</div><div><div class="mod-name">Cuotas Condominios</div><div class="mod-desc">Cobros, pagos y morosidad</div><span class="mod-tag tag-core">Core</span></div></div>
+      <div class="mod-item"><div class="mod-icon">📱</div><div><div class="mod-name">WhatsApp Business</div><div class="mod-desc">Notificaciones automáticas</div><span class="mod-tag tag-core">Core</span></div></div>
+      <div class="mod-item"><div class="mod-icon">🧾</div><div><div class="mod-name">CFDI 4.0 / SAT</div><div class="mod-desc">Facturación electrónica integrada</div><span class="mod-tag tag-core">Core</span></div></div>
+      <div class="mod-item"><div class="mod-icon">📜</div><div><div class="mod-name">Certificados No Adeudo</div><div class="mod-desc">PDF oficial para condominios</div><span class="mod-tag tag-legal">Legal</span></div></div>
+      <div class="mod-item"><div class="mod-icon">📋</div><div><div class="mod-name">Contratos de Venta</div><div class="mod-desc">Promesas, compraventas, adendas</div><span class="mod-tag tag-core">Core</span></div></div>
+      <div class="mod-item"><div class="mod-icon">🏠</div><div><div class="mod-name">Pipeline 7 Etapas</div><div class="mod-desc">Deals con probabilidades IA</div><span class="mod-tag tag-core">Core</span></div></div>
+      <div class="mod-item"><div class="mod-icon">🔑</div><div><div class="mod-name">2FA + Audit Log</div><div class="mod-desc">Seguridad y trazabilidad total</div><span class="mod-tag tag-sec">Seguridad</span></div></div>
+      <div class="mod-item"><div class="mod-icon">📞</div><div><div class="mod-name">Alertas Email 8 AM</div><div class="mod-desc">Resumen diario automático</div><span class="mod-tag tag-core">Core</span></div></div>
+    </div>
+  </div>
+</section>
+
+<section style="padding:80px 24px;text-align:center">
+  <div style="max-width:900px;margin:0 auto">
+    <div class="section-eyebrow">Por qué PlayaMXCRM</div>
+    <h2 class="section-title" style="font-size:clamp(28px,4vw,44px)">Construido para Playa del Carmen.</h2>
+    <div class="stats-grid">
+      <div class="stat-cell"><div class="stat-n" style="color:#58a6ff">49</div><div class="stat-l">Módulos operativos</div></div>
+      <div class="stat-cell"><div class="stat-n" style="color:#30d158">8.6</div><div class="stat-l">Score de completitud / 10</div></div>
+      <div class="stat-cell"><div class="stat-n" style="color:#bf5af2">3</div><div class="stat-l">CRMs en una plataforma</div></div>
+      <div class="stat-cell"><div class="stat-n" style="color:#ff9f0a">75</div><div class="stat-l">Tablas de datos estructuradas</div></div>
+    </div>
+  </div>
+</section>
+
+<section style="padding:80px 24px;background:var(--bg2)" id="comparativa">
+  <div class="comp-inner">
+    <div style="text-align:center">
+      <div class="section-eyebrow">MLL vs CRM tradicional</div>
+      <h2 class="section-title" style="font-size:clamp(28px,4vw,44px)">No es un CRM.<br/>Es más.</h2>
+      <p class="section-sub">El cliente que dijo que los CRM son obsoletos tenía razón — sobre los CRM del pasado. PlayaMXCRM es lo que viene.</p>
+    </div>
+    <div class="comp-table">
+      <div class="comp-header">
+        <div>Capacidad</div>
+        <div class="h-mid">CRM Tradicional</div>
+        <div class="h-right">PlayaMXCRM + MLL</div>
+      </div>
+      <div class="comp-row"><div class="feat-name">Gestión de datos</div><div class="old">✓ Almacena</div><div class="new-val">✓ Almacena + Interpreta</div></div>
+      <div class="comp-row"><div class="feat-name">Alertas automáticas</div><div class="old">Manual</div><div class="new-val">✓ Email + Push · 48h / 90 días</div></div>
+      <div class="comp-row"><div class="feat-name">Seguimientos</div><div class="old">Tú los escribes</div><div class="new-val">✓ IA los redacta</div></div>
+      <div class="comp-row"><div class="feat-name">Análisis del pipeline</div><div class="old">Reportes fijos</div><div class="new-val">✓ Conversacional en tiempo real</div></div>
+      <div class="comp-row"><div class="feat-name">Scoring de clientes</div><div class="old">—</div><div class="new-val">✓ 5 dimensiones predictivas</div></div>
+      <div class="comp-row"><div class="feat-name">Contratos</div><div class="old">Word / PDF manual</div><div class="new-val">✓ Generados desde el chat</div></div>
+      <div class="comp-row"><div class="feat-name">Asesoría legal</div><div class="old">Abogado externo</div><div class="new-val">✓ IA especializada Q.Roo 24/7</div></div>
+      <div class="comp-row"><div class="feat-name">Geolocalización de inmuebles</div><div class="old">—</div><div class="new-val">✓ lat/lng + amenidades</div></div>
+      <div class="comp-row"><div class="feat-name">Cumplimiento legal MX</div><div class="old">—</div><div class="new-val">✓ LFPDPPP + Ley Condominios Q.Roo</div></div>
+      <div class="comp-row"><div class="feat-name">Protección civil</div><div class="old">—</div><div class="new-val">✓ Plan por complejo condominal</div></div>
+      <div class="comp-row"><div class="feat-name">Seguridad API</div><div class="old">Básica</div><div class="new-val">✓ 2FA · Audit log · Rate limiting</div></div>
+      <div class="comp-row"><div class="feat-name">Mercado objetivo</div><div class="old">Genérico</div><div class="new-val">✓ Riviera Maya específico</div></div>
+    </div>
+  </div>
+</section>
+
+<section class="cta-section" id="contacto">
+  <div class="section-eyebrow">Para empezar hoy</div>
+  <h2 class="cta-title">El futuro del<br/>CRM ya llegó.</h2>
+  <p class="cta-sub">Solicita una demostración personalizada con tus datos reales. Sin compromiso. Sin tarjeta de crédito.</p>
+  <div class="hero-actions">
+    <a href="mailto:roberto.luna.osorio84@gmail.com" class="btn-primary">📧 Solicitar demo →</a>
+    <a href="https://wa.link/nm291n" class="btn-ghost" target="_blank">Solicitar por WhatsApp</a>
+  </div>
+  <p style="font-size:12px;color:var(--text3);margin-top:32px">Rentas · Ventas · Condominios · Playa del Carmen, Quintana Roo</p>
+</section>
+
+<footer>
+  <div class="footer-logo">Playa<span>MX</span>CRM</div>
+  <p class="footer-tagline">Inteligencia inmobiliaria para la Riviera Maya</p>
+  <div class="footer-links">
+    <a href="https://playamxcrm.vercel.app/privacidad">Privacidad</a>
+    <a href="#">Términos</a>
+    <a href="mailto:roberto.luna.osorio84@gmail.com">Soporte</a>
+  </div>
+  <p class="footer-legal">© 2026 PlayaMXCRM · Playa del Carmen, Quintana Roo, México · Todos los derechos reservados</p>
+</footer>
+
+</body>
+</html>

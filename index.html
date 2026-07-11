@@ -1,180 +1,203 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" class="snap">
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
-<meta name="version" content="2026-07-11-monako-redesign"/>
+<meta name="version" content="2026-07-11-monako-v2-animated"/>
 <title>PlayaMXCRM — Inteligencia para el Mercado Inmobiliario</title>
-<meta name="description" content="El primer CRM inmobiliario de la Riviera Maya con inteligencia artificial integrada. Rentas, ventas y condominios en una sola plataforma que razona contigo."/>
+<meta name="description" content="El primer CRM inmobiliario de la Riviera Maya con inteligencia artificial integrada. Rentas, ventas y condominios en una plataforma que razona contigo."/>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&family=Doto:wght@400;700;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
 <style>
 :root{
-  --bg:#000;--bg2:#050505;--bg3:#0a0a0a;
-  --border:rgba(232,232,232,0.12);--border2:rgba(232,232,232,0.06);
+  --bg:#000;--bg2:#060606;--bg3:#0c0c0c;
+  --border:rgba(232,232,232,0.12);--border2:rgba(232,232,232,0.05);
   --text:#e8e8e8;--text2:#999;--text3:#666;
-  --accent:#0071e3;--accent-dim:rgba(0,113,227,0.5);--accent-glow:rgba(0,113,227,0.15);
+  --accent:#0071e3;--accent-dim:rgba(0,113,227,0.5);--accent-glow:rgba(0,113,227,0.18);
   --accent2:#30d158;--accent3:#ff9f0a;--accent4:#bf5af2;
-  --mono:'Space Mono',ui-monospace,monospace;
-  --dot:'Doto',var(--mono);
-  --sans:'Inter',system-ui,sans-serif;
+  --mono:'Space Mono',ui-monospace,monospace;--dot:'Doto',var(--mono);
 }
 *{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth}
+html.snap{scroll-snap-type:y proximity}
 body{font-family:var(--mono);background:var(--bg);color:var(--text);overflow-x:hidden;line-height:1.6;-webkit-font-smoothing:antialiased}
 ::selection{background:var(--accent);color:#fff}
-body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(var(--border2) 1px,transparent 1px),linear-gradient(90deg,var(--border2) 1px,transparent 1px);background-size:64px 64px;pointer-events:none;z-index:0;mask-image:radial-gradient(ellipse 100% 100% at 50% 0%,#000 40%,transparent 90%);-webkit-mask-image:radial-gradient(ellipse 100% 100% at 50% 0%,#000 40%,transparent 90%)}
-.wrap{max-width:1200px;margin:0 auto;padding:0 24px;position:relative;z-index:1}
-nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(0,0,0,0.6);backdrop-filter:blur(24px) saturate(160%);-webkit-backdrop-filter:blur(24px) saturate(160%);border-bottom:1px solid var(--border);height:56px;display:flex;align-items:center}
-.nav-inner{max-width:1200px;width:100%;margin:0 auto;padding:0 24px;display:flex;align-items:center;justify-content:space-between}
-.nav-logo{font-family:var(--mono);font-size:15px;font-weight:700;letter-spacing:-0.5px;color:var(--text);text-decoration:none}
+::-webkit-scrollbar{width:0}
+
+/* Grid de fondo global */
+.bg-grid{position:fixed;inset:0;background-image:linear-gradient(var(--border2) 1px,transparent 1px),linear-gradient(90deg,var(--border2) 1px,transparent 1px);background-size:60px 60px;pointer-events:none;z-index:0;mask-image:radial-gradient(ellipse 90% 70% at 50% 30%,#000 20%,transparent 80%);-webkit-mask-image:radial-gradient(ellipse 90% 70% at 50% 30%,#000 20%,transparent 80%)}
+
+.wrap{max-width:1160px;margin:0 auto;padding:0 24px;position:relative;z-index:2;width:100%}
+
+/* ── NAV ── */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(0,0,0,0.55);backdrop-filter:blur(24px) saturate(160%);-webkit-backdrop-filter:blur(24px) saturate(160%);border-bottom:1px solid var(--border);height:56px;display:flex;align-items:center;transition:background .3s}
+.nav-inner{max-width:1160px;width:100%;margin:0 auto;padding:0 24px;display:flex;align-items:center;justify-content:space-between}
+.nav-logo{font-size:15px;font-weight:700;letter-spacing:-0.5px;color:var(--text);text-decoration:none}
 .nav-logo span{color:var(--accent)}
 .nav-links{display:flex;gap:28px;list-style:none}
-.nav-links a{font-family:var(--mono);font-size:12px;letter-spacing:0.02em;color:var(--text2);text-decoration:none;transition:color .15s;text-transform:uppercase}
+.nav-links a{font-size:12px;color:var(--text2);text-decoration:none;transition:color .15s;text-transform:uppercase;letter-spacing:0.03em}
 .nav-links a:hover{color:var(--text)}
-.nav-cta{font-family:var(--mono);font-size:12px;font-weight:700;background:transparent;color:var(--accent);border:1px solid var(--accent-dim);border-radius:2px;padding:8px 16px;cursor:pointer;text-decoration:none;transition:all .2s;text-transform:uppercase;letter-spacing:0.04em}
+.nav-cta{font-size:12px;font-weight:700;background:transparent;color:var(--accent);border:1px solid var(--accent-dim);border-radius:2px;padding:8px 16px;text-decoration:none;transition:all .2s;text-transform:uppercase;letter-spacing:0.04em}
 .nav-cta:hover{background:var(--accent);color:#fff;box-shadow:0 0 24px var(--accent-glow)}
 .nav-toggle{display:none;background:none;border:none;color:var(--text);font-size:20px;cursor:pointer}
-.hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:120px 24px 80px;position:relative;overflow:hidden}
-#rings{position:absolute;inset:0;width:100%;height:100%;z-index:0;pointer-events:none}
-.hero-content{position:relative;z-index:2}
-.hero-eyebrow{font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:0.28em;text-transform:uppercase;color:var(--accent);margin-bottom:28px;opacity:0;animation:fadeUp .8s .1s forwards}
-.hero-eyebrow::before{content:'[ '}
-.hero-eyebrow::after{content:' ]'}
-.hero-title{font-family:var(--dot);font-size:clamp(40px,8vw,92px);font-weight:900;letter-spacing:-1px;line-height:0.98;margin-bottom:28px;opacity:0;animation:fadeUp .8s .2s forwards}
-.hero-title em{font-style:normal;color:var(--accent);text-shadow:0 0 40px var(--accent-glow)}
-.hero-sub{font-family:var(--mono);font-size:clamp(14px,2vw,18px);color:var(--text2);max-width:600px;margin:0 auto 40px;line-height:1.7;opacity:0;animation:fadeUp .8s .3s forwards}
-.hero-actions{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;margin-bottom:56px;opacity:0;animation:fadeUp .8s .4s forwards}
-.hero-strip{font-family:var(--mono);font-size:11px;letter-spacing:0.12em;color:var(--text3);text-transform:uppercase;opacity:0;animation:fadeUp .8s .5s forwards}
-.btn-primary{font-family:var(--mono);font-size:13px;font-weight:700;background:var(--accent);color:#fff;border:1px solid var(--accent);border-radius:2px;padding:14px 28px;cursor:pointer;text-decoration:none;transition:all .2s;text-transform:uppercase;letter-spacing:0.04em;display:inline-flex;align-items:center;gap:8px}
+
+/* ── PANELS (scroll-snap secciones) ── */
+.panel{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;padding:90px 24px;scroll-snap-align:start;overflow:hidden}
+.panel-tall{min-height:auto;scroll-snap-align:none;padding:110px 24px}
+
+/* ── Botones ── */
+.btn-primary{font-size:13px;font-weight:700;background:var(--accent);color:#fff;border:1px solid var(--accent);border-radius:2px;padding:14px 28px;text-decoration:none;transition:all .2s;text-transform:uppercase;letter-spacing:0.04em;display:inline-flex;align-items:center;gap:8px}
 .btn-primary:hover{background:#0077ed;box-shadow:0 0 32px var(--accent-glow);transform:translateY(-1px)}
-.btn-ghost{font-family:var(--mono);font-size:13px;font-weight:700;background:transparent;color:var(--text);border:1px solid var(--border);border-radius:2px;padding:14px 28px;cursor:pointer;text-decoration:none;transition:all .2s;text-transform:uppercase;letter-spacing:0.04em}
+.btn-ghost{font-size:13px;font-weight:700;background:transparent;color:var(--text);border:1px solid var(--border);border-radius:2px;padding:14px 28px;text-decoration:none;transition:all .2s;text-transform:uppercase;letter-spacing:0.04em}
 .btn-ghost:hover{border-color:var(--text2);background:rgba(232,232,232,0.04)}
-.hero-badge{display:inline-flex;align-items:center;gap:8px;font-family:var(--mono);font-size:11px;color:var(--text3);border:1px solid var(--border);border-radius:2px;padding:6px 14px;margin-bottom:32px;text-transform:uppercase;letter-spacing:0.08em;opacity:0;animation:fadeUp .8s 0s forwards}
-.hero-badge .dot{width:6px;height:6px;border-radius:50%;background:var(--accent2);box-shadow:0 0 8px var(--accent2)}
-@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
-section{position:relative;z-index:1;padding:100px 0}
-.sec-label{font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:0.24em;text-transform:uppercase;color:var(--accent);margin-bottom:20px}
-.sec-label::before{content:'// '}
-.sec-title{font-family:var(--mono);font-size:clamp(28px,4.5vw,48px);font-weight:700;letter-spacing:-1px;line-height:1.05;margin-bottom:20px}
+
+/* ── Tipografía secciones ── */
+.eyebrow{font-size:11px;font-weight:700;letter-spacing:0.24em;text-transform:uppercase;color:var(--accent);margin-bottom:22px}
+.eyebrow::before{content:'[ '}.eyebrow::after{content:' ]'}
+.label{font-size:11px;font-weight:700;letter-spacing:0.22em;text-transform:uppercase;color:var(--accent);margin-bottom:18px}
+.label::before{content:'// '}
+.big-title{font-family:var(--dot);font-size:clamp(38px,7vw,84px);font-weight:900;letter-spacing:-1px;line-height:0.98;margin-bottom:26px}
+.big-title em{font-style:normal;color:var(--accent);text-shadow:0 0 40px var(--accent-glow)}
+.sec-title{font-size:clamp(26px,4.2vw,46px);font-weight:700;letter-spacing:-1px;line-height:1.05;margin-bottom:18px}
 .sec-title em{font-style:normal;color:var(--accent)}
-.sec-sub{font-family:var(--mono);font-size:15px;color:var(--text2);max-width:600px;line-height:1.7;margin-bottom:56px}
+.lead{font-size:clamp(14px,1.8vw,17px);color:var(--text2);max-width:580px;line-height:1.7}
 
-/* ── MLL Demo (chat) ── */
-.mll-demo{border:1px solid var(--border);border-radius:4px;background:var(--bg2);overflow:hidden;max-width:680px}
-.mll-head{display:flex;align-items:center;gap:8px;padding:12px 16px;border-bottom:1px solid var(--border);background:var(--bg3)}
-.mll-head .dots{display:flex;gap:6px}
-.mll-head .dots span{width:10px;height:10px;border-radius:50%;background:var(--border)}
-.mll-head .dots span:first-child{background:#ff5f56}.mll-head .dots span:nth-child(2){background:#ffbd2e}.mll-head .dots span:nth-child(3){background:#27c93f}
-.mll-head .title{font-family:var(--mono);font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:0.1em;margin-left:8px}
-.mll-body{padding:20px;display:flex;flex-direction:column;gap:14px}
-.msg{display:flex;gap:12px;align-items:flex-start}
-.msg .av{width:28px;height:28px;border-radius:2px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;font-family:var(--mono)}
-.msg.ai .av{background:var(--accent);color:#fff}
-.msg.user .av{background:var(--bg3);color:var(--text2);border:1px solid var(--border)}
-.msg .bubble{font-family:var(--mono);font-size:13px;line-height:1.6;color:var(--text);background:var(--bg3);border:1px solid var(--border);border-radius:2px;padding:12px 14px;flex:1}
-.msg.user .bubble{background:transparent;color:var(--text2)}
-.stat-row{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px dashed var(--border);font-size:12px}
-.stat-row:last-child{border-bottom:none}
-.stat-row .k{color:var(--text2)}.stat-row .v{color:var(--accent);font-weight:700}
-.stat-row .v.hot{color:var(--accent3)}
+/* ── Animaciones de entrada ── */
+[data-anim]{opacity:0;transform:translateY(30px);transition:opacity .8s cubic-bezier(.2,.7,.2,1),transform .8s cubic-bezier(.2,.7,.2,1)}
+[data-anim].in{opacity:1;transform:translateY(0)}
+[data-anim="1"]{transition-delay:.08s}[data-anim="2"]{transition-delay:.16s}[data-anim="3"]{transition-delay:.24s}[data-anim="4"]{transition-delay:.32s}[data-anim="5"]{transition-delay:.40s}
 
-/* ── Grid features ── */
-.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);border:1px solid var(--border)}
-.grid .cell{background:var(--bg);padding:32px 28px;transition:background .2s;position:relative}
-.grid .cell:hover{background:var(--bg2)}
-.cell .ico{font-size:24px;margin-bottom:16px;display:block}
-.cell h3{font-family:var(--mono);font-size:16px;font-weight:700;margin-bottom:10px;letter-spacing:-0.3px;white-space:pre-line;line-height:1.2}
-.cell p{font-family:var(--mono);font-size:12.5px;color:var(--text2);line-height:1.6}
-.cell .tag{font-family:var(--mono);font-size:10px;color:var(--accent);text-transform:uppercase;letter-spacing:0.1em;margin-top:14px;display:inline-block}
-.cell .tag::before{content:'● '}
+/* ══ HERO — mockup de producto flotante ══ */
+.hero-stack{position:relative;width:100%;max-width:900px;margin-top:56px;perspective:1600px}
+.hero-mock{border:1px solid var(--border);border-radius:8px;background:var(--bg2);overflow:hidden;box-shadow:0 40px 120px rgba(0,113,227,0.12),0 0 0 1px var(--border);transform:rotateX(8deg);transform-origin:center top;opacity:0;animation:mockIn 1.2s .5s cubic-bezier(.2,.7,.2,1) forwards}
+@keyframes mockIn{from{opacity:0;transform:rotateX(20deg) translateY(60px) scale(.94)}to{opacity:1;transform:rotateX(6deg) translateY(0) scale(1)}}
+.mock-bar{display:flex;align-items:center;gap:8px;padding:11px 16px;border-bottom:1px solid var(--border);background:var(--bg3)}
+.mock-bar .dots{display:flex;gap:6px}
+.mock-bar .dots i{width:11px;height:11px;border-radius:50%;background:var(--border);display:block}
+.mock-bar .dots i:nth-child(1){background:#ff5f56}.mock-bar .dots i:nth-child(2){background:#ffbd2e}.mock-bar .dots i:nth-child(3){background:#27c93f}
+.mock-bar .url{font-size:11px;color:var(--text3);margin-left:12px;letter-spacing:0.03em}
+.mock-body{display:grid;grid-template-columns:180px 1fr;min-height:340px}
+.mock-side{border-right:1px solid var(--border);padding:16px 0;background:rgba(0,0,0,0.3)}
+.mock-side .si{display:flex;align-items:center;gap:10px;padding:9px 18px;font-size:11.5px;color:var(--text3);cursor:default;transition:all .3s}
+.mock-side .si.on{color:var(--accent);border-left:2px solid var(--accent);background:var(--accent-glow)}
+.mock-side .si .d{width:14px;text-align:center}
+.mock-main{padding:20px;position:relative}
+.mock-h{font-size:13px;color:var(--text2);margin-bottom:16px;display:flex;justify-content:space-between;align-items:center}
+.mock-h b{color:var(--text);font-weight:700}
+.mock-kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:18px}
+.kpi{border:1px solid var(--border);border-radius:5px;padding:14px;background:var(--bg3)}
+.kpi .kv{font-family:var(--dot);font-size:26px;font-weight:900;color:var(--accent);line-height:1}
+.kpi .kl{font-size:9.5px;color:var(--text3);text-transform:uppercase;letter-spacing:0.06em;margin-top:6px}
+/* barras que crecen */
+.mock-chart{display:flex;align-items:flex-end;gap:8px;height:90px;padding:12px;border:1px solid var(--border);border-radius:5px;background:var(--bg3)}
+.mock-chart .bar{flex:1;background:linear-gradient(180deg,var(--accent),var(--accent-dim));border-radius:2px 2px 0 0;height:0;transition:height 1s cubic-bezier(.2,.7,.2,1)}
+.mock-chart.go .bar{height:var(--h)}
 
-/* ── Alertas ── */
-.alerts-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
-.alert-card{border:1px solid var(--border);border-radius:4px;padding:24px;background:var(--bg2);transition:all .2s}
-.alert-card:hover{border-color:var(--accent-dim);background:var(--bg3)}
-.alert-card .ico{font-size:22px;margin-bottom:14px}
-.alert-card h3{font-family:var(--mono);font-size:15px;font-weight:700;margin-bottom:8px}
-.alert-card p{font-family:var(--mono);font-size:12.5px;color:var(--text2);line-height:1.6;margin-bottom:12px}
-.alert-card .badge{font-family:var(--mono);font-size:10px;color:var(--accent3);border:1px solid rgba(255,159,10,0.3);border-radius:2px;padding:3px 8px;text-transform:uppercase;letter-spacing:0.06em}
+/* ══ Chat MLL que se escribe ══ */
+.chat{border:1px solid var(--border);border-radius:8px;background:var(--bg2);overflow:hidden;max-width:640px;width:100%;box-shadow:0 30px 80px rgba(0,0,0,0.5)}
+.chat-head{display:flex;align-items:center;gap:8px;padding:12px 16px;border-bottom:1px solid var(--border);background:var(--bg3)}
+.chat-head .dots{display:flex;gap:6px}.chat-head .dots i{width:10px;height:10px;border-radius:50%;background:var(--border);display:block}
+.chat-head .dots i:nth-child(1){background:#ff5f56}.chat-head .dots i:nth-child(2){background:#ffbd2e}.chat-head .dots i:nth-child(3){background:#27c93f}
+.chat-head .t{font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:0.1em;margin-left:8px}
+.chat-body{padding:20px;display:flex;flex-direction:column;gap:14px;min-height:280px}
+.cmsg{display:flex;gap:12px;align-items:flex-start;opacity:0;transform:translateY(12px);transition:all .5s}
+.cmsg.show{opacity:1;transform:translateY(0)}
+.cmsg .av{width:28px;height:28px;border-radius:3px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700}
+.cmsg.ai .av{background:var(--accent);color:#fff}
+.cmsg.user .av{background:var(--bg3);color:var(--text2);border:1px solid var(--border)}
+.cmsg .bub{font-size:13px;line-height:1.65;color:var(--text);background:var(--bg3);border:1px solid var(--border);border-radius:4px;padding:12px 14px;flex:1}
+.cmsg.user .bub{background:transparent;color:var(--text2)}
+.srow{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px dashed var(--border);font-size:12px}
+.srow:last-child{border-bottom:none}.srow .k{color:var(--text2)}.srow .v{color:var(--accent);font-weight:700}.srow .v.hot{color:var(--accent3)}
+.typing{display:inline-flex;gap:4px;padding:4px 0}
+.typing i{width:6px;height:6px;border-radius:50%;background:var(--text3);animation:blink 1.2s infinite}
+.typing i:nth-child(2){animation-delay:.2s}.typing i:nth-child(3){animation-delay:.4s}
+@keyframes blink{0%,60%,100%{opacity:.3}30%{opacity:1}}
 
-/* ── Módulos chips ── */
-.mods-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
-.mod-chip{border:1px solid var(--border);border-radius:3px;padding:16px;background:var(--bg2);transition:all .2s;cursor:default}
-.mod-chip:hover{border-color:var(--accent-dim);transform:translateY(-2px)}
-.mod-chip .ico{font-size:18px;margin-bottom:10px}
-.mod-chip h4{font-family:var(--mono);font-size:12.5px;font-weight:700;margin-bottom:4px;line-height:1.2}
-.mod-chip p{font-family:var(--mono);font-size:10.5px;color:var(--text3);line-height:1.4}
-.mod-chip .mt{font-family:var(--mono);font-size:9px;color:var(--accent);text-transform:uppercase;letter-spacing:0.08em;margin-top:8px;display:block}
+/* ══ Grid features ══ */
+.fgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);border:1px solid var(--border);width:100%}
+.fcell{background:var(--bg);padding:30px 26px;transition:background .3s}
+.fcell:hover{background:var(--bg2)}
+.fcell .ico{font-size:24px;margin-bottom:16px;display:block}
+.fcell h3{font-size:15px;font-weight:700;margin-bottom:10px;letter-spacing:-0.3px;white-space:pre-line;line-height:1.2}
+.fcell p{font-size:12px;color:var(--text2);line-height:1.6}
+.fcell .tag{font-size:10px;color:var(--accent);text-transform:uppercase;letter-spacing:0.1em;margin-top:14px;display:inline-block}
+.fcell .tag::before{content:'● '}
 
-/* ── Stats ── */
-.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border);border:1px solid var(--border)}
-.stat-box{background:var(--bg);padding:40px 24px;text-align:center}
-.stat-box .num{font-family:var(--dot);font-size:clamp(40px,6vw,64px);font-weight:900;color:var(--accent);line-height:1;margin-bottom:12px;text-shadow:0 0 30px var(--accent-glow)}
-.stat-box .lbl{font-family:var(--mono);font-size:11px;color:var(--text2);text-transform:uppercase;letter-spacing:0.1em}
+/* ══ Alertas ══ */
+.agrid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;width:100%}
+.acard{border:1px solid var(--border);border-radius:6px;padding:22px;background:var(--bg2);transition:all .3s}
+.acard:hover{border-color:var(--accent-dim);background:var(--bg3);transform:translateY(-3px)}
+.acard .ico{font-size:20px;margin-bottom:12px}
+.acard h3{font-size:14px;font-weight:700;margin-bottom:8px}
+.acard p{font-size:12px;color:var(--text2);line-height:1.55;margin-bottom:12px}
+.acard .badge{font-size:9.5px;color:var(--accent3);border:1px solid rgba(255,159,10,0.3);border-radius:2px;padding:3px 8px;text-transform:uppercase;letter-spacing:0.06em}
 
-/* ── Comparativa ── */
-.compare{border:1px solid var(--border);border-radius:4px;overflow:hidden;font-family:var(--mono)}
-.compare table{width:100%;border-collapse:collapse}
-.compare th,.compare td{padding:16px 20px;text-align:left;font-size:12.5px;border-bottom:1px solid var(--border)}
-.compare thead th{font-size:11px;text-transform:uppercase;letter-spacing:0.08em;color:var(--text3);background:var(--bg3)}
-.compare thead th:last-child{color:var(--accent)}
-.compare td:first-child{color:var(--text2)}
-.compare td:nth-child(2){color:var(--text3)}
-.compare td:last-child{color:var(--text);font-weight:700}
-.compare tbody tr:hover{background:var(--bg2)}
-.compare .yes{color:var(--accent2)}
-.compare .no{color:var(--text3)}
+/* ══ Módulos ══ */
+.mgrid{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;width:100%}
+.mchip{border:1px solid var(--border);border-radius:4px;padding:14px;background:var(--bg2);transition:all .3s}
+.mchip:hover{border-color:var(--accent-dim);transform:translateY(-2px);background:var(--bg3)}
+.mchip .ico{font-size:17px;margin-bottom:9px}
+.mchip h4{font-size:11.5px;font-weight:700;margin-bottom:3px;line-height:1.2}
+.mchip p{font-size:9.5px;color:var(--text3);line-height:1.35}
 
-/* ── CTA final ── */
-.cta-final{text-align:center;padding:120px 24px;position:relative;overflow:hidden}
-.cta-final .sec-title{margin-bottom:20px}
-.cta-final .sec-sub{margin:0 auto 40px}
-.cta-final .hero-actions{margin-bottom:0}
+/* ══ Stats ══ */
+.sgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border);border:1px solid var(--border);width:100%}
+.sbox{background:var(--bg);padding:38px 22px;text-align:center}
+.sbox .n{font-family:var(--dot);font-size:clamp(38px,5.5vw,60px);font-weight:900;color:var(--accent);line-height:1;margin-bottom:10px;text-shadow:0 0 30px var(--accent-glow)}
+.sbox .l{font-size:10.5px;color:var(--text2);text-transform:uppercase;letter-spacing:0.09em}
 
-/* ── Footer ── */
-footer{border-top:1px solid var(--border);padding:60px 24px 40px;position:relative;z-index:1}
-.foot-inner{max-width:1200px;margin:0 auto;display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:32px}
-.foot-brand .logo{font-family:var(--mono);font-size:16px;font-weight:700;margin-bottom:10px}
-.foot-brand .logo span{color:var(--accent)}
-.foot-brand p{font-family:var(--mono);font-size:12px;color:var(--text3);max-width:280px;line-height:1.6}
-.foot-links{display:flex;gap:24px}
-.foot-links a{font-family:var(--mono);font-size:12px;color:var(--text2);text-decoration:none;text-transform:uppercase;letter-spacing:0.04em}
+/* ══ Comparativa ══ */
+.cmp{border:1px solid var(--border);border-radius:6px;overflow:hidden;width:100%}
+.cmp table{width:100%;border-collapse:collapse}
+.cmp th,.cmp td{padding:14px 18px;text-align:left;font-size:12px;border-bottom:1px solid var(--border)}
+.cmp thead th{font-size:10.5px;text-transform:uppercase;letter-spacing:0.08em;color:var(--text3);background:var(--bg3)}
+.cmp thead th:last-child{color:var(--accent)}
+.cmp td:first-child{color:var(--text2)}.cmp td:nth-child(2){color:var(--text3)}.cmp td:last-child{color:var(--text);font-weight:700}
+.cmp tbody tr{transition:background .2s}.cmp tbody tr:hover{background:var(--bg2)}
+.cmp .yes{color:var(--accent2)}
+
+/* ══ Footer ══ */
+footer{border-top:1px solid var(--border);padding:56px 24px 36px;position:relative;z-index:2}
+.foot-in{max-width:1160px;margin:0 auto;display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:28px}
+.foot-brand .lg{font-size:16px;font-weight:700;margin-bottom:10px}.foot-brand .lg span{color:var(--accent)}
+.foot-brand p{font-size:12px;color:var(--text3);max-width:280px;line-height:1.6}
+.foot-links{display:flex;gap:22px}
+.foot-links a{font-size:12px;color:var(--text2);text-decoration:none;text-transform:uppercase;letter-spacing:0.04em}
 .foot-links a:hover{color:var(--accent)}
-.foot-bottom{max-width:1200px;margin:40px auto 0;padding-top:24px;border-top:1px solid var(--border);font-family:var(--mono);font-size:11px;color:var(--text3);text-align:center;letter-spacing:0.04em}
+.foot-bot{max-width:1160px;margin:36px auto 0;padding-top:22px;border-top:1px solid var(--border);font-size:11px;color:var(--text3);text-align:center;letter-spacing:0.03em}
 
-/* ── Reveal on scroll ── */
-.reveal{opacity:0;transform:translateY(30px);transition:opacity .7s cubic-bezier(.2,.7,.2,1),transform .7s cubic-bezier(.2,.7,.2,1)}
-.reveal.in{opacity:1;transform:translateY(0)}
+/* ══ Scroll progress ══ */
+.progress{position:fixed;top:0;left:0;height:2px;background:var(--accent);z-index:200;width:0;box-shadow:0 0 10px var(--accent);transition:width .1s}
 
-/* ── Responsive ── */
+/* ══ Responsive ══ */
 @media(max-width:900px){
-  .grid{grid-template-columns:repeat(2,1fr)}
-  .mods-grid{grid-template-columns:repeat(2,1fr)}
-  .stats{grid-template-columns:repeat(2,1fr)}
-  .alerts-grid{grid-template-columns:1fr}
+  .fgrid{grid-template-columns:repeat(2,1fr)}.mgrid{grid-template-columns:repeat(3,1fr)}
+  .sgrid{grid-template-columns:repeat(2,1fr)}.agrid{grid-template-columns:1fr}
+  .mock-body{grid-template-columns:1fr}.mock-side{display:none}
+  html.snap{scroll-snap-type:none}
 }
 @media(max-width:640px){
-  .nav-links{display:none}
-  .nav-links.open{display:flex;position:fixed;top:56px;left:0;right:0;flex-direction:column;background:rgba(0,0,0,0.96);padding:24px;gap:20px;border-bottom:1px solid var(--border)}
+  .nav-links{display:none}.nav-links.open{display:flex;position:fixed;top:56px;left:0;right:0;flex-direction:column;background:rgba(0,0,0,0.97);padding:24px;gap:18px;border-bottom:1px solid var(--border)}
   .nav-toggle{display:block}
-  .grid,.mods-grid,.stats{grid-template-columns:1fr}
-  section{padding:70px 0}
-  .compare{overflow-x:auto}
-  .compare table{min-width:520px}
-  .foot-inner{flex-direction:column}
+  .fgrid,.mgrid,.sgrid{grid-template-columns:1fr}
+  .cmp{overflow-x:auto}.cmp table{min-width:520px}
+  .foot-in{flex-direction:column}
+  .panel{padding:80px 20px}
 }
 </style>
 </head>
 <body>
+<div class="bg-grid"></div>
+<div class="progress" id="progress"></div>
 
 <nav>
   <div class="nav-inner">
-    <a href="#" class="nav-logo">Playa<span>MX</span>CRM</a>
+    <a href="#top" class="nav-logo">Playa<span>MX</span>CRM</a>
     <ul class="nav-links" id="navLinks">
       <li><a href="#mll">Inteligencia</a></li>
-      <li><a href="#modulos">Módulos</a></li>
+      <li><a href="#crms">Módulos</a></li>
       <li><a href="#alertas">Alertas</a></li>
       <li><a href="#comparativa">Comparativa</a></li>
       <li><a href="#contacto">Contacto</a></li>
@@ -184,50 +207,46 @@ footer{border-top:1px solid var(--border);padding:60px 24px 40px;position:relati
   </div>
 </nav>
 
-<!-- ══ HERO ══ -->
-<header class="hero">
-  <canvas id="rings"></canvas>
-  <div class="hero-content">
-    <div class="hero-badge"><span class="dot"></span> v2026 · 49 módulos activos · Score 8.6/10</div>
-    <div class="hero-eyebrow">CRM Inmobiliario · Playa del Carmen, Q.Roo</div>
-    <h1 class="hero-title">El CRM que<br><em>piensa contigo.</em></h1>
-    <p class="hero-sub">El primer sistema de gestión inmobiliaria para la Riviera Maya con inteligencia artificial integrada, alertas automáticas en tiempo real y cumplimiento legal local en cada módulo.</p>
-    <div class="hero-actions">
+<!-- ══ PANEL 1 — HERO ══ -->
+<section class="panel" id="top">
+  <div class="wrap" style="text-align:center;display:flex;flex-direction:column;align-items:center">
+    <div class="eyebrow" data-anim="1">CRM Inmobiliario · Playa del Carmen</div>
+    <h1 class="big-title" data-anim="2">El CRM que<br><em>piensa contigo.</em></h1>
+    <p class="lead" data-anim="3" style="margin:0 auto 36px">El primer sistema de gestión inmobiliaria de la Riviera Maya con inteligencia artificial integrada. Rentas, ventas y condominios en una plataforma que razona, alerta y actúa por ti.</p>
+    <div data-anim="4" style="display:flex;gap:16px;flex-wrap:wrap;justify-content:center">
       <a href="#contacto" class="btn-primary">Solicitar demo →</a>
-      <a href="#mll" class="btn-ghost">Ver cómo funciona</a>
+      <a href="#mll" class="btn-ghost">Ver en acción</a>
     </div>
-    <div class="hero-strip">Rentas · Ventas · Condominios · IA integrada</div>
-  </div>
-</header>
 
-<!-- ══ MLL ══ -->
-<section id="mll">
-  <div class="wrap">
-    <div class="sec-label reveal">Machine Learning Layer</div>
-    <h2 class="sec-title reveal">No solo gestiona.<br><em>Ahora razona.</em></h2>
-    <p class="sec-sub reveal">Mientras los CRM tradicionales almacenan datos, PlayaMXCRM los interpreta. El asistente MLL entiende tu pipeline, detecta riesgos y te dice exactamente qué hacer a continuación.</p>
-    <div class="mll-demo reveal">
-      <div class="mll-head">
-        <div class="dots"><span></span><span></span><span></span></div>
-        <div class="title">MLL · Asistente en tiempo real</div>
-      </div>
-      <div class="mll-body">
-        <div class="msg ai">
-          <div class="av">◎</div>
-          <div class="bubble">Buenos días. Tengo <strong style="color:var(--accent)">3 alertas activas</strong> para ti hoy:<br><br>› A/C sin resolver — Veleta 305 · <span style="color:var(--accent3)">HIGH, 2 días</span><br>› Contrato Xcacel · vence en 60 días<br>› Carlos Medina — PH-A2 · visita hoy 15:00 ✓<br><br>¿Redacto el seguimiento para Medina o revisamos el pipeline?</div>
+    <!-- Mockup de producto animado -->
+    <div class="hero-stack">
+      <div class="hero-mock">
+        <div class="mock-bar">
+          <div class="dots"><i></i><i></i><i></i></div>
+          <div class="url">playamxcrm.vercel.app/condominios/dashboard</div>
         </div>
-        <div class="msg user">
-          <div class="av">R</div>
-          <div class="bubble">¿Cuál es la probabilidad real de cerrar con Medina esta semana?</div>
-        </div>
-        <div class="msg ai">
-          <div class="av">◎</div>
-          <div class="bubble">Basado en el modelo de scoring y el historial:
-            <div style="margin-top:12px">
-              <div class="stat-row"><span class="k">Score predictivo</span><span class="v">74 / 100</span></div>
-              <div class="stat-row"><span class="k">Probabilidad de cierre</span><span class="v">81%</span></div>
-              <div class="stat-row"><span class="k">Señal de compra</span><span class="v hot">HOT 🔥</span></div>
-              <div class="stat-row"><span class="k">Recomendación</span><span class="v">Contactar hoy antes 18h</span></div>
+        <div class="mock-body">
+          <div class="mock-side">
+            <div class="si"><span class="d">◎</span> Asistente MLL</div>
+            <div class="si on"><span class="d">▦</span> Dashboard</div>
+            <div class="si"><span class="d">🏢</span> Rentas</div>
+            <div class="si"><span class="d">🏗</span> Ventas</div>
+            <div class="si"><span class="d">🏛</span> Condominios</div>
+            <div class="si"><span class="d">🔐</span> Accesos</div>
+            <div class="si"><span class="d">⚖</span> Legal IA</div>
+          </div>
+          <div class="mock-main">
+            <div class="mock-h"><b>Resumen de hoy</b> <span style="color:var(--accent2)">● En vivo</span></div>
+            <div class="mock-kpis">
+              <div class="kpi"><div class="kv" data-kpi="128">0</div><div class="kl">Inmuebles</div></div>
+              <div class="kpi"><div class="kv" data-kpi="94">0</div><div class="kl">% Ocupación</div></div>
+              <div class="kpi"><div class="kv" data-kpi="17">0</div><div class="kl">Alertas</div></div>
+            </div>
+            <div class="mock-chart" id="heroChart">
+              <div class="bar" style="--h:45%"></div><div class="bar" style="--h:70%"></div>
+              <div class="bar" style="--h:55%"></div><div class="bar" style="--h:85%"></div>
+              <div class="bar" style="--h:65%"></div><div class="bar" style="--h:95%"></div>
+              <div class="bar" style="--h:78%"></div>
             </div>
           </div>
         </div>
@@ -236,228 +255,250 @@ footer{border-top:1px solid var(--border);padding:60px 24px 40px;position:relati
   </div>
 </section>
 
-<!-- ══ CARACTERÍSTICAS ══ -->
-<section id="caracteristicas">
-  <div class="wrap">
-    <div class="sec-label reveal">Características</div>
-    <h2 class="sec-title reveal">Tres CRMs<br><em>en uno.</em></h2>
-    <p class="sec-sub reveal">Gestiona rentas, ventas y condominios desde una plataforma unificada. Con inteligencia artificial que trabaja para ti las 24 horas.</p>
-    <div class="grid reveal">
-      <div class="cell"><span class="ico">◎</span><h3>Asistente
-MLL</h3><p>Pregunta en lenguaje natural. Recibe análisis del pipeline, redacción de contratos, alertas proactivas y estrategias de negociación — con datos reales de tu CRM.</p><span class="tag">IA en tiempo real</span></div>
-      <div class="cell"><span class="ico">🎯</span><h3>Scoring
-Predictivo</h3><p>Modelo de 5 dimensiones que analiza cada comprador e inquilino. Predice probabilidades de cierre, detecta riesgos de impago y recomienda la siguiente acción.</p><span class="tag">Machine Learning</span></div>
-      <div class="cell"><span class="ico">⚖️</span><h3>Asesor
-Legal IA</h3><p>Especializado en derecho inmobiliario de Quintana Roo. Zona restringida, fideicomiso Art. 27, ISR, ISABI, créditos hipotecarios y Ley de Condominios Q.Roo.</p><span class="tag">Claude AI</span></div>
-      <div class="cell"><span class="ico">🏢</span><h3>CRM
-Rentas</h3><p>Propietarios, inquilinos, contratos con depósito obligatorio, geolocalización, amenidades, scoring, portal de inquilinos, CFDI 4.0 y WhatsApp Business.</p><span class="tag">Módulo completo</span></div>
-      <div class="cell"><span class="ico">🏗️</span><h3>CRM
-Ventas</h3><p>Pipeline visual 7 etapas, scoring de compradores, mapa satelital, contratos de promesa y compraventa, exportación CSV, brokers externos y tracking de comisiones.</p><span class="tag">Módulo completo</span></div>
-      <div class="cell"><span class="ico">🏛️</span><h3>CRM
-Condominios</h3><p>Complejos, cuotas, asambleas, avisos, certificados de no adeudo PDF, presupuesto anual, control de acceso biométrico, protección civil y cumplimiento LFPDPPP.</p><span class="tag">Módulo completo</span></div>
+<!-- ══ PANEL 2 — MLL (chat que se escribe) ══ -->
+<section class="panel" id="mll">
+  <div class="wrap" style="display:flex;flex-direction:column;align-items:center;text-align:center">
+    <div class="label" data-anim="1">Machine Learning Layer</div>
+    <h2 class="sec-title" data-anim="2">No solo gestiona.<br><em>Ahora razona.</em></h2>
+    <p class="lead" data-anim="3" style="margin:0 auto 40px">Mientras los CRM tradicionales almacenan datos, PlayaMXCRM los interpreta. Pregúntale en lenguaje natural y responde con análisis real de tu pipeline.</p>
+    <div class="chat" id="chatDemo" data-anim="4">
+      <div class="chat-head">
+        <div class="dots"><i></i><i></i><i></i></div>
+        <div class="t">MLL · Asistente en tiempo real</div>
+      </div>
+      <div class="chat-body" id="chatBody"></div>
     </div>
   </div>
 </section>
 
-<!-- ══ ALERTAS ══ -->
-<section id="alertas">
-  <div class="wrap">
-    <div class="sec-label reveal">Alertas inteligentes</div>
-    <h2 class="sec-title reveal">El sistema que<br><em>no duerme.</em></h2>
-    <p class="sec-sub reveal">Alertas automáticas por correo y notificaciones push en el navegador. Nunca pierdas un vencimiento, incidencia urgente o contrato por renovar.</p>
-    <div class="alerts-grid reveal">
-      <div class="alert-card"><div class="ico">⚡</div><h3>Incidencias HIGH sin resolver</h3><p>Email automático al admin y propietario si una incidencia de alta prioridad lleva más de 48 horas abierta.</p><span class="badge">Inmediato · 48h</span></div>
-      <div class="alert-card"><div class="ico">📅</div><h3>Vencimiento de contratos</h3><p>Notificaciones escalonadas a 90, 60, 30, 14, 7, 3 y 1 días antes. Admin, propietario e inquilino reciben el aviso en el momento correcto.</p><span class="badge">90 → 1 día</span></div>
-      <div class="alert-card"><div class="ico">💰</div><h3>Rentas vencidas</h3><p>Seguimiento automático a 1, 3, 7, 14 y 30 días de mora. Resumen financiero diario al administrador a las 8 AM.</p><span class="badge">Diario 8 AM</span></div>
-      <div class="alert-card"><div class="ico">🔔</div><h3>Push en el navegador</h3><p>Service Worker integrado. Las alertas críticas llegan al escritorio o celular incluso con el navegador en segundo plano.</p><span class="badge">Web Push API</span></div>
-      <div class="alert-card"><div class="ico">🏠</div><h3>Inmuebles vacantes</h3><p>Alerta automática cuando un inmueble lleva más de 30 días sin ocupar, con sugerencias de acción para el propietario.</p><span class="badge">+30 días</span></div>
-      <div class="alert-card"><div class="ico">🔐</div><h3>Control de acceso</h3><p>Suspensión automática de acceso por mantenimiento vencido. Notifica al propietario cada vez que su inquilino entra o sale del condominio.</p><span class="badge">Biométrico</span></div>
+<!-- ══ PANEL 3 — CARACTERÍSTICAS ══ -->
+<section class="panel panel-tall" id="crms">
+  <div class="wrap" style="display:flex;flex-direction:column;align-items:center;text-align:center">
+    <div class="label" data-anim="1">Características</div>
+    <h2 class="sec-title" data-anim="2">Tres CRMs<br><em>en uno.</em></h2>
+    <p class="lead" data-anim="3" style="margin:0 auto 48px">Rentas, ventas y condominios desde una plataforma unificada, con IA que trabaja para ti las 24 horas.</p>
+    <div class="fgrid">
+      <div class="fcell" data-anim="1"><span class="ico">◎</span><h3>Asistente
+MLL</h3><p>Pregunta en lenguaje natural. Recibe análisis del pipeline, redacción de contratos, alertas proactivas y estrategias — con datos reales de tu CRM.</p><span class="tag">IA en tiempo real</span></div>
+      <div class="fcell" data-anim="2"><span class="ico">🎯</span><h3>Scoring
+Predictivo</h3><p>Modelo de 5 dimensiones que analiza cada comprador e inquilino. Predice cierre, detecta riesgo de impago y recomienda la siguiente acción.</p><span class="tag">Machine Learning</span></div>
+      <div class="fcell" data-anim="3"><span class="ico">⚖️</span><h3>Asesor
+Legal IA</h3><p>Especializado en Quintana Roo. Zona restringida, fideicomiso Art. 27, ISR, ISABI, hipotecas y Ley de Condominios Q.Roo.</p><span class="tag">Claude AI</span></div>
+      <div class="fcell" data-anim="1"><span class="ico">🏢</span><h3>CRM
+Rentas</h3><p>Propietarios, inquilinos, contratos con depósito, geolocalización, amenidades, scoring, portal de inquilinos, CFDI 4.0 y WhatsApp.</p><span class="tag">Módulo completo</span></div>
+      <div class="fcell" data-anim="2"><span class="ico">🏗️</span><h3>CRM
+Ventas</h3><p>Pipeline visual 7 etapas, scoring de compradores, mapa satelital, contratos de promesa, brokers externos y tracking de comisiones.</p><span class="tag">Módulo completo</span></div>
+      <div class="fcell" data-anim="3"><span class="ico">🏛️</span><h3>CRM
+Condominios</h3><p>Complejos, cuotas, asambleas, certificados de no adeudo PDF, presupuesto anual, control de acceso biométrico y cumplimiento LFPDPPP.</p><span class="tag">Módulo completo</span></div>
     </div>
   </div>
 </section>
 
-<!-- ══ MÓDULOS ══ -->
-<section id="modulos">
-  <div class="wrap">
-    <div class="sec-label reveal">49 módulos operativos</div>
-    <h2 class="sec-title reveal">Todo lo que necesitas,<br><em>ya integrado.</em></h2>
-    <p class="sec-sub reveal">Una plataforma completa. Sin plugins, sin integraciones frágiles, sin costos ocultos.</p>
-    <div class="mods-grid reveal">
-      <div class="mod-chip"><div class="ico">◎</div><h4>IA Asistente MLL</h4><p>Análisis conversacional en tiempo real</p><span class="mt">IA</span></div>
-      <div class="mod-chip"><div class="ico">🎯</div><h4>Scoring Predictivo</h4><p>Compradores e inquilinos</p><span class="mt">IA</span></div>
-      <div class="mod-chip"><div class="ico">⚖️</div><h4>Asesor Legal IA</h4><p>Derecho inmobiliario Q.Roo</p><span class="mt">IA</span></div>
-      <div class="mod-chip"><div class="ico">📄</div><h4>PDF Ejecutivo</h4><p>Reportes automáticos del dashboard</p><span class="mt">IA</span></div>
-      <div class="mod-chip"><div class="ico">🔐</div><h4>Control de Acceso</h4><p>Biométrico ZKTeco + suspensión</p><span class="mt">Nuevo</span></div>
-      <div class="mod-chip"><div class="ico">🚨</div><h4>Protección Civil</h4><p>Rutas de evacuación por complejo</p><span class="mt">Nuevo</span></div>
-      <div class="mod-chip"><div class="ico">📊</div><h4>Presupuesto Anual</h4><p>Por complejo condominal</p><span class="mt">Nuevo</span></div>
-      <div class="mod-chip"><div class="ico">🔒</div><h4>LFPDPPP</h4><p>Eliminación definitiva ARCO</p><span class="mt">Legal</span></div>
-      <div class="mod-chip"><div class="ico">🔔</div><h4>Push Notifications</h4><p>Service Worker + alertas DANGER</p><span class="mt">Nuevo</span></div>
-      <div class="mod-chip"><div class="ico">🗺️</div><h4>Geolocalización</h4><p>lat/lng + amenidades por inmueble</p><span class="mt">Nuevo</span></div>
-      <div class="mod-chip"><div class="ico">⬇</div><h4>CSV Universal</h4><p>Exportación en todos los módulos</p><span class="mt">Core</span></div>
-      <div class="mod-chip"><div class="ico">🛡</div><h4>Rate Limiting</h4><p>Endpoints públicos protegidos</p><span class="mt">Seguridad</span></div>
-      <div class="mod-chip"><div class="ico">🗳️</div><h4>Asambleas & Votos</h4><p>Condominios en tiempo real</p><span class="mt">Core</span></div>
-      <div class="mod-chip"><div class="ico">💳</div><h4>Cuotas Condominios</h4><p>Cobros, pagos y morosidad</p><span class="mt">Core</span></div>
-      <div class="mod-chip"><div class="ico">📱</div><h4>WhatsApp Business</h4><p>Notificaciones automáticas</p><span class="mt">Core</span></div>
-      <div class="mod-chip"><div class="ico">🧾</div><h4>CFDI 4.0 / SAT</h4><p>Facturación electrónica</p><span class="mt">Core</span></div>
-      <div class="mod-chip"><div class="ico">📜</div><h4>Certificados No Adeudo</h4><p>PDF oficial para condominios</p><span class="mt">Legal</span></div>
-      <div class="mod-chip"><div class="ico">🏠</div><h4>Pipeline 7 Etapas</h4><p>Deals con probabilidades IA</p><span class="mt">Core</span></div>
-      <div class="mod-chip"><div class="ico">🔑</div><h4>2FA + Audit Log</h4><p>Seguridad y trazabilidad total</p><span class="mt">Seguridad</span></div>
-      <div class="mod-chip"><div class="ico">📞</div><h4>Call Center</h4><p>Registro y seguimiento de llamadas</p><span class="mt">Core</span></div>
+<!-- ══ PANEL 4 — ALERTAS ══ -->
+<section class="panel panel-tall" id="alertas">
+  <div class="wrap" style="display:flex;flex-direction:column;align-items:center;text-align:center">
+    <div class="label" data-anim="1">Alertas inteligentes</div>
+    <h2 class="sec-title" data-anim="2">El sistema que<br><em>no duerme.</em></h2>
+    <p class="lead" data-anim="3" style="margin:0 auto 48px">Alertas automáticas por correo y notificaciones push. Nunca pierdas un vencimiento, incidencia urgente o contrato por renovar.</p>
+    <div class="agrid">
+      <div class="acard" data-anim="1"><div class="ico">⚡</div><h3>Incidencias HIGH</h3><p>Email automático al admin y propietario si una incidencia de alta prioridad lleva más de 48 horas abierta.</p><span class="badge">Inmediato · 48h</span></div>
+      <div class="acard" data-anim="2"><div class="ico">📅</div><h3>Vencimiento de contratos</h3><p>Notificaciones escalonadas a 90, 60, 30, 14, 7, 3 y 1 días antes. Admin, propietario e inquilino avisados a tiempo.</p><span class="badge">90 → 1 día</span></div>
+      <div class="acard" data-anim="3"><div class="ico">💰</div><h3>Rentas vencidas</h3><p>Seguimiento a 1, 3, 7, 14 y 30 días de mora. Resumen financiero diario al administrador a las 8 AM.</p><span class="badge">Diario 8 AM</span></div>
+      <div class="acard" data-anim="1"><div class="ico">🔔</div><h3>Push en navegador</h3><p>Service Worker integrado. Las alertas críticas llegan al escritorio o celular con el navegador en segundo plano.</p><span class="badge">Web Push API</span></div>
+      <div class="acard" data-anim="2"><div class="ico">🏠</div><h3>Inmuebles vacantes</h3><p>Alerta cuando un inmueble lleva más de 30 días sin ocupar, con sugerencias de acción para el propietario.</p><span class="badge">+30 días</span></div>
+      <div class="acard" data-anim="3"><div class="ico">🔐</div><h3>Control de acceso</h3><p>Suspensión automática por mantenimiento vencido. Notifica al propietario cada vez que su inquilino entra o sale.</p><span class="badge">Biométrico</span></div>
     </div>
   </div>
 </section>
 
-<!-- ══ STATS ══ -->
-<section id="porque">
-  <div class="wrap">
-    <div class="sec-label reveal">Por qué PlayaMXCRM</div>
-    <h2 class="sec-title reveal">Construido para<br><em>Playa del Carmen.</em></h2>
-    <div class="stats reveal" style="margin-top:40px">
-      <div class="stat-box"><div class="num" data-count="49">49</div><div class="lbl">Módulos operativos</div></div>
-      <div class="stat-box"><div class="num">8.6</div><div class="lbl">Score completitud / 10</div></div>
-      <div class="stat-box"><div class="num" data-count="3">3</div><div class="lbl">CRMs en una plataforma</div></div>
-      <div class="stat-box"><div class="num" data-count="75">75</div><div class="lbl">Tablas estructuradas</div></div>
+<!-- ══ PANEL 5 — MÓDULOS ══ -->
+<section class="panel panel-tall" id="modulos">
+  <div class="wrap" style="display:flex;flex-direction:column;align-items:center;text-align:center">
+    <div class="label" data-anim="1">49 módulos operativos</div>
+    <h2 class="sec-title" data-anim="2">Todo integrado.<br><em>Sin plugins.</em></h2>
+    <p class="lead" data-anim="3" style="margin:0 auto 48px">Una plataforma completa. Sin integraciones frágiles, sin costos ocultos.</p>
+    <div class="mgrid">
+      <div class="mchip" data-anim="1"><div class="ico">◎</div><h4>Asistente MLL</h4><p>Análisis conversacional</p></div>
+      <div class="mchip" data-anim="1"><div class="ico">🎯</div><h4>Scoring IA</h4><p>Compradores e inquilinos</p></div>
+      <div class="mchip" data-anim="1"><div class="ico">⚖️</div><h4>Legal IA</h4><p>Derecho Q.Roo</p></div>
+      <div class="mchip" data-anim="1"><div class="ico">📄</div><h4>PDF Ejecutivo</h4><p>Reportes automáticos</p></div>
+      <div class="mchip" data-anim="1"><div class="ico">🔐</div><h4>Control Acceso</h4><p>Biométrico ZKTeco</p></div>
+      <div class="mchip" data-anim="2"><div class="ico">🚨</div><h4>Protección Civil</h4><p>Rutas de evacuación</p></div>
+      <div class="mchip" data-anim="2"><div class="ico">📊</div><h4>Presupuesto</h4><p>Anual por complejo</p></div>
+      <div class="mchip" data-anim="2"><div class="ico">🔒</div><h4>LFPDPPP</h4><p>Eliminación ARCO</p></div>
+      <div class="mchip" data-anim="2"><div class="ico">🔔</div><h4>Push</h4><p>Service Worker</p></div>
+      <div class="mchip" data-anim="2"><div class="ico">🗺️</div><h4>Geolocalización</h4><p>lat/lng + amenidades</p></div>
+      <div class="mchip" data-anim="3"><div class="ico">⬇</div><h4>CSV Universal</h4><p>Todos los módulos</p></div>
+      <div class="mchip" data-anim="3"><div class="ico">🛡</div><h4>Rate Limiting</h4><p>Endpoints protegidos</p></div>
+      <div class="mchip" data-anim="3"><div class="ico">🗳️</div><h4>Asambleas</h4><p>Votos en tiempo real</p></div>
+      <div class="mchip" data-anim="3"><div class="ico">💳</div><h4>Cuotas</h4><p>Cobros y morosidad</p></div>
+      <div class="mchip" data-anim="3"><div class="ico">📱</div><h4>WhatsApp</h4><p>Notificaciones auto</p></div>
+      <div class="mchip" data-anim="4"><div class="ico">🧾</div><h4>CFDI 4.0</h4><p>Facturación SAT</p></div>
+      <div class="mchip" data-anim="4"><div class="ico">📜</div><h4>Certificados</h4><p>No adeudo PDF</p></div>
+      <div class="mchip" data-anim="4"><div class="ico">🏠</div><h4>Pipeline 7</h4><p>Deals con IA</p></div>
+      <div class="mchip" data-anim="4"><div class="ico">🔑</div><h4>2FA + Audit</h4><p>Seguridad total</p></div>
+      <div class="mchip" data-anim="4"><div class="ico">📞</div><h4>Call Center</h4><p>Registro de llamadas</p></div>
     </div>
   </div>
 </section>
 
-<!-- ══ COMPARATIVA ══ -->
-<section id="comparativa">
-  <div class="wrap">
-    <div class="sec-label reveal">MLL vs CRM tradicional</div>
-    <h2 class="sec-title reveal">No es un CRM.<br><em>Es más.</em></h2>
-    <p class="sec-sub reveal">El cliente que dijo que los CRM son obsoletos tenía razón — sobre los CRM del pasado. PlayaMXCRM es lo que viene.</p>
-    <div class="compare reveal">
+<!-- ══ PANEL 6 — STATS ══ -->
+<section class="panel" id="stats">
+  <div class="wrap" style="display:flex;flex-direction:column;align-items:center;text-align:center">
+    <div class="label" data-anim="1">Por qué PlayaMXCRM</div>
+    <h2 class="sec-title" data-anim="2">Construido para<br><em>Playa del Carmen.</em></h2>
+    <div class="sgrid" data-anim="3" style="margin-top:44px">
+      <div class="sbox"><div class="n" data-count="49">0</div><div class="l">Módulos operativos</div></div>
+      <div class="sbox"><div class="n" data-decimal="8.6">0</div><div class="l">Score / 10</div></div>
+      <div class="sbox"><div class="n" data-count="3">0</div><div class="l">CRMs en uno</div></div>
+      <div class="sbox"><div class="n" data-count="75">0</div><div class="l">Tablas estructuradas</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ PANEL 7 — COMPARATIVA ══ -->
+<section class="panel panel-tall" id="comparativa">
+  <div class="wrap" style="display:flex;flex-direction:column;align-items:center;text-align:center">
+    <div class="label" data-anim="1">MLL vs CRM tradicional</div>
+    <h2 class="sec-title" data-anim="2">No es un CRM.<br><em>Es más.</em></h2>
+    <p class="lead" data-anim="3" style="margin:0 auto 44px">Los CRM del pasado son obsoletos. PlayaMXCRM es lo que viene.</p>
+    <div class="cmp" data-anim="4">
       <table>
         <thead><tr><th>Capacidad</th><th>CRM Tradicional</th><th>PlayaMXCRM + MLL</th></tr></thead>
         <tbody>
           <tr><td>Gestión de datos</td><td>Almacena</td><td><span class="yes">✓</span> Almacena + Interpreta</td></tr>
-          <tr><td>Alertas automáticas</td><td class="no">Manual</td><td><span class="yes">✓</span> Email + Push · 48h / 90 días</td></tr>
-          <tr><td>Seguimientos</td><td class="no">Tú los escribes</td><td><span class="yes">✓</span> IA los redacta</td></tr>
-          <tr><td>Análisis del pipeline</td><td class="no">Reportes fijos</td><td><span class="yes">✓</span> Conversacional en tiempo real</td></tr>
-          <tr><td>Scoring de clientes</td><td class="no">—</td><td><span class="yes">✓</span> 5 dimensiones predictivas</td></tr>
-          <tr><td>Contratos</td><td class="no">Word / PDF manual</td><td><span class="yes">✓</span> Generados desde el chat</td></tr>
-          <tr><td>Asesoría legal</td><td class="no">Abogado externo</td><td><span class="yes">✓</span> IA especializada Q.Roo 24/7</td></tr>
-          <tr><td>Control de acceso</td><td class="no">—</td><td><span class="yes">✓</span> Biométrico ZKTeco integrado</td></tr>
-          <tr><td>Cumplimiento legal MX</td><td class="no">—</td><td><span class="yes">✓</span> LFPDPPP + Ley Condominios Q.Roo</td></tr>
-          <tr><td>Seguridad API</td><td class="no">Básica</td><td><span class="yes">✓</span> 2FA · Audit log · Rate limiting</td></tr>
-          <tr><td>Mercado objetivo</td><td class="no">Genérico</td><td><span class="yes">✓</span> Riviera Maya específico</td></tr>
+          <tr><td>Alertas automáticas</td><td>Manual</td><td><span class="yes">✓</span> Email + Push · 48h/90d</td></tr>
+          <tr><td>Seguimientos</td><td>Tú los escribes</td><td><span class="yes">✓</span> IA los redacta</td></tr>
+          <tr><td>Análisis de pipeline</td><td>Reportes fijos</td><td><span class="yes">✓</span> Conversacional en vivo</td></tr>
+          <tr><td>Scoring de clientes</td><td>—</td><td><span class="yes">✓</span> 5 dimensiones predictivas</td></tr>
+          <tr><td>Contratos</td><td>Word/PDF manual</td><td><span class="yes">✓</span> Generados desde el chat</td></tr>
+          <tr><td>Asesoría legal</td><td>Abogado externo</td><td><span class="yes">✓</span> IA especializada Q.Roo 24/7</td></tr>
+          <tr><td>Control de acceso</td><td>—</td><td><span class="yes">✓</span> Biométrico ZKTeco</td></tr>
+          <tr><td>Cumplimiento MX</td><td>—</td><td><span class="yes">✓</span> LFPDPPP + Ley Q.Roo</td></tr>
+          <tr><td>Mercado objetivo</td><td>Genérico</td><td><span class="yes">✓</span> Riviera Maya específico</td></tr>
         </tbody>
       </table>
     </div>
   </div>
 </section>
 
-<!-- ══ CTA FINAL ══ -->
-<section class="cta-final" id="contacto">
-  <canvas id="rings2" style="position:absolute;inset:0;width:100%;height:100%;z-index:0;pointer-events:none"></canvas>
-  <div class="wrap" style="position:relative;z-index:2">
-    <div class="sec-label reveal" style="text-align:center">Para empezar hoy</div>
-    <h2 class="sec-title reveal">El futuro del CRM<br><em>ya llegó.</em></h2>
-    <p class="sec-sub reveal">Solicita una demostración personalizada con tus datos reales. Sin compromiso. Sin tarjeta de crédito.</p>
-    <div class="hero-actions reveal">
+<!-- ══ PANEL 8 — CTA FINAL ══ -->
+<section class="panel" id="contacto">
+  <div class="wrap" style="text-align:center;display:flex;flex-direction:column;align-items:center">
+    <div class="label" data-anim="1" style="margin-left:auto;margin-right:auto">Para empezar hoy</div>
+    <h2 class="big-title" data-anim="2" style="font-size:clamp(34px,6vw,72px)">El futuro del CRM<br><em>ya llegó.</em></h2>
+    <p class="lead" data-anim="3" style="margin:0 auto 40px">Solicita una demostración personalizada con tus datos reales. Sin compromiso, sin tarjeta de crédito.</p>
+    <div data-anim="4" style="display:flex;gap:16px;flex-wrap:wrap;justify-content:center">
       <a href="mailto:zaero.hell@gmail.com?subject=Demo%20PlayaMXCRM" class="btn-primary">📧 Solicitar demo →</a>
-      <a href="https://wa.link/nm291n" class="btn-ghost">Solicitar por WhatsApp</a>
+      <a href="https://wa.link/nm291n" class="btn-ghost">Por WhatsApp</a>
     </div>
   </div>
 </section>
 
-<!-- ══ FOOTER ══ -->
 <footer>
-  <div class="foot-inner">
+  <div class="foot-in">
     <div class="foot-brand">
-      <div class="logo">Playa<span>MX</span>CRM</div>
+      <div class="lg">Playa<span>MX</span>CRM</div>
       <p>Inteligencia inmobiliaria para la Riviera Maya. Rentas · Ventas · Condominios.</p>
     </div>
     <div class="foot-links">
       <a href="https://playamxcrm.vercel.app/privacidad">Privacidad</a>
-      <a href="#">Términos</a>
       <a href="mailto:zaero.hell@gmail.com">Soporte</a>
     </div>
   </div>
-  <div class="foot-bottom">© 2026 PlayaMXCRM · Playa del Carmen, Quintana Roo, México · Todos los derechos reservados</div>
+  <div class="foot-bot">© 2026 PlayaMXCRM · Playa del Carmen, Quintana Roo, México · Todos los derechos reservados</div>
 </footer>
 
 <script>
-// ── Pulse Rings — anillos concéntricos que emanan del centro ──
-function initRings(canvasId){
-  const cv = document.getElementById(canvasId);
-  if(!cv) return;
-  const ctx = cv.getContext('2d');
-  let W,H,cx,cy,dpr;
-  function resize(){
-    dpr = Math.min(window.devicePixelRatio||1, 2);
-    const r = cv.getBoundingClientRect();
-    W = r.width; H = r.height;
-    cv.width = W*dpr; cv.height = H*dpr;
-    ctx.setTransform(dpr,0,0,dpr,0,0);
-    cx = W/2; cy = H/2;
-  }
-  resize();
-  window.addEventListener('resize',resize);
+// ── Barra de progreso de scroll ──
+const prog = document.getElementById('progress');
+addEventListener('scroll', ()=>{
+  const h = document.documentElement.scrollHeight - innerHeight;
+  prog.style.width = (scrollY/h*100)+'%';
+},{passive:true});
 
-  const rings = [];
-  const MAX = 6;
-  let t = 0;
-  function spawn(){ rings.push({ r: 0, life: 1 }); }
-  spawn();
+// ── Nav sólido al hacer scroll ──
+addEventListener('scroll', ()=>{
+  document.querySelector('nav').style.background = scrollY>40 ? 'rgba(0,0,0,0.85)' : 'rgba(0,0,0,0.55)';
+},{passive:true});
 
-  function draw(){
-    ctx.clearRect(0,0,W,H);
-    const maxR = Math.max(W,H) * 0.7;
-    // anillos
-    for(let i=rings.length-1;i>=0;i--){
-      const ring = rings[i];
-      ring.r += 0.9;
-      ring.life = 1 - (ring.r / maxR);
-      if(ring.life <= 0){ rings.splice(i,1); continue; }
-      const alpha = ring.life * 0.35;
-      ctx.beginPath();
-      ctx.arc(cx,cy,ring.r,0,Math.PI*2);
-      ctx.strokeStyle = 'rgba(0,113,227,'+alpha+')';
-      ctx.lineWidth = 1;
-      ctx.stroke();
-    }
-    // punto central con glow
-    const pulse = 3 + Math.sin(t*0.05)*1.5;
-    const g = ctx.createRadialGradient(cx,cy,0,cx,cy,40);
-    g.addColorStop(0,'rgba(0,113,227,0.5)');
-    g.addColorStop(1,'rgba(0,113,227,0)');
-    ctx.fillStyle = g;
-    ctx.beginPath(); ctx.arc(cx,cy,40,0,Math.PI*2); ctx.fill();
-    ctx.fillStyle = 'rgba(0,113,227,0.9)';
-    ctx.beginPath(); ctx.arc(cx,cy,pulse,0,Math.PI*2); ctx.fill();
+// ── Reveal on scroll (entrada de elementos) ──
+const io = new IntersectionObserver((es)=>{
+  es.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }});
+},{threshold:0.15});
+document.querySelectorAll('[data-anim]').forEach(el=>io.observe(el));
 
-    t++;
-    if(t % 70 === 0 && rings.length < MAX) spawn();
-    requestAnimationFrame(draw);
-  }
-  draw();
-}
-initRings('rings');
-initRings('rings2');
+// ── Hero: KPIs que suben + gráfica que crece ──
+const heroIO = new IntersectionObserver((es)=>{
+  es.forEach(e=>{
+    if(!e.isIntersecting) return;
+    // barras
+    document.getElementById('heroChart')?.classList.add('go');
+    // kpis
+    document.querySelectorAll('[data-kpi]').forEach(el=>{
+      const target = parseInt(el.dataset.kpi,10); let n=0;
+      const step = Math.max(1,Math.ceil(target/35));
+      const tick=()=>{ n+=step; if(n>=target){el.textContent=target;} else {el.textContent=n;requestAnimationFrame(tick);} };
+      tick();
+    });
+    heroIO.unobserve(e.target);
+  });
+},{threshold:0.4});
+const hc = document.getElementById('heroChart'); if(hc) heroIO.observe(hc);
 
-// ── Reveal on scroll ──
-const io = new IntersectionObserver((entries)=>{
-  entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
-},{ threshold:0.12 });
-document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
-
-// ── Contador de stats ──
-const counters = document.querySelectorAll('.num[data-count]');
-const cio = new IntersectionObserver((entries)=>{
-  entries.forEach(e=>{
+// ── Contador de stats (enteros y decimales) ──
+const sio = new IntersectionObserver((es)=>{
+  es.forEach(e=>{
     if(!e.isIntersecting) return;
     const el = e.target;
-    const target = parseInt(el.dataset.count,10);
-    let n = 0;
-    const step = Math.max(1, Math.ceil(target/40));
-    const tick = ()=>{ n += step; if(n>=target){ el.textContent = target; } else { el.textContent = n; requestAnimationFrame(tick); } };
-    tick();
-    cio.unobserve(el);
+    if(el.dataset.count){
+      const target=parseInt(el.dataset.count,10); let n=0;
+      const step=Math.max(1,Math.ceil(target/40));
+      const tick=()=>{ n+=step; if(n>=target){el.textContent=target;} else {el.textContent=n;requestAnimationFrame(tick);} };
+      tick();
+    } else if(el.dataset.decimal){
+      const target=parseFloat(el.dataset.decimal); let n=0;
+      const step=target/40;
+      const tick=()=>{ n+=step; if(n>=target){el.textContent=target.toFixed(1);} else {el.textContent=n.toFixed(1);requestAnimationFrame(tick);} };
+      tick();
+    }
+    sio.unobserve(el);
   });
-},{ threshold:0.5 });
-counters.forEach(c=>cio.observe(c));
+},{threshold:0.5});
+document.querySelectorAll('[data-count],[data-decimal]').forEach(c=>sio.observe(c));
+
+// ── Chat MLL que se escribe solo al entrar en viewport ──
+const chatScript = [
+  {type:'ai', delay:400, html:`Buenos días. Tengo <strong style="color:var(--accent)">3 alertas activas</strong> hoy:<br><br>› A/C sin resolver — Veleta 305 · <span style="color:var(--accent3)">HIGH, 2 días</span><br>› Contrato Xcacel · vence en 60 días<br>› Carlos Medina — PH-A2 · visita hoy 15:00 ✓`},
+  {type:'user', delay:1400, html:`¿Probabilidad real de cerrar con Medina esta semana?`},
+  {type:'ai', delay:1200, html:`Según el modelo de scoring y el historial:<div style="margin-top:12px"><div class="srow"><span class="k">Score predictivo</span><span class="v">74 / 100</span></div><div class="srow"><span class="k">Probabilidad de cierre</span><span class="v">81%</span></div><div class="srow"><span class="k">Señal de compra</span><span class="v hot">HOT 🔥</span></div><div class="srow"><span class="k">Recomendación</span><span class="v">Contactar hoy antes 18h</span></div></div>`}
+];
+function typeChat(){
+  const body = document.getElementById('chatBody');
+  if(!body || body.dataset.done) return;
+  body.dataset.done = '1';
+  let i = 0;
+  function next(){
+    if(i >= chatScript.length) return;
+    const m = chatScript[i];
+    // indicador de escritura
+    const typing = document.createElement('div');
+    typing.className = 'cmsg '+m.type;
+    typing.innerHTML = `<div class="av">${m.type==='ai'?'◎':'R'}</div><div class="bub"><div class="typing"><i></i><i></i><i></i></div></div>`;
+    body.appendChild(typing);
+    requestAnimationFrame(()=>typing.classList.add('show'));
+    setTimeout(()=>{
+      typing.querySelector('.bub').innerHTML = m.html;
+      i++;
+      setTimeout(next, i<chatScript.length?chatScript[i].delay:0);
+    }, m.type==='ai'?900:500);
+  }
+  setTimeout(next, chatScript[0].delay);
+}
+const chatIO = new IntersectionObserver((es)=>{
+  es.forEach(e=>{ if(e.isIntersecting){ typeChat(); chatIO.unobserve(e.target); }});
+},{threshold:0.3});
+const cb = document.getElementById('chatDemo'); if(cb) chatIO.observe(cb);
 
 // ── Cerrar menú móvil al hacer clic ──
 document.querySelectorAll('#navLinks a').forEach(a=>{

@@ -1,252 +1,330 @@
 <!DOCTYPE html>
-<html lang="es" class="snap">
+<html lang="es">
 <head>
 <meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width,initial-scale=1"/>
-<meta name="version" content="2026-07-11-monako-v2-animated"/>
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
+<meta name="version" content="2026-07-11-executive-v3"/>
+<meta name="theme-color" content="#0B0F1A"/>
+<meta name="apple-mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
 <title>PlayaMXCRM — Inteligencia para el Mercado Inmobiliario</title>
-<meta name="description" content="El primer CRM inmobiliario de la Riviera Maya con inteligencia artificial integrada. Rentas, ventas y condominios en una plataforma que razona contigo."/>
+<meta name="description" content="La plataforma de gestión inmobiliaria de la Riviera Maya con inteligencia artificial integrada. Rentas, ventas y condominios en un solo sistema que razona, anticipa y actúa."/>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-<link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&family=Doto:wght@400;700;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
 <style>
 :root{
-  --bg:#000;--bg2:#060606;--bg3:#0c0c0c;
-  --border:rgba(232,232,232,0.12);--border2:rgba(232,232,232,0.05);
-  --text:#e8e8e8;--text2:#999;--text3:#666;
-  --accent:#0071e3;--accent-dim:rgba(0,113,227,0.5);--accent-glow:rgba(0,113,227,0.18);
-  --accent2:#30d158;--accent3:#ff9f0a;--accent4:#bf5af2;
-  --mono:'Space Mono',ui-monospace,monospace;--dot:'Doto',var(--mono);
+  /* Base — navy carbón, sin negro puro */
+  --bg:#0B0F1A;--bg2:#0F1421;--bg3:#151B2B;--bg4:#1B2333;
+  /* Bordes azulados tenues */
+  --border:rgba(180,196,230,0.10);--border2:rgba(180,196,230,0.06);--border-strong:rgba(180,196,230,0.18);
+  /* Texto */
+  --text:#E8EAF0;--text2:#9AA3B7;--text3:#5D6578;
+  /* Acento zafiro refinado */
+  --accent:#4E7CF6;--accent-bright:#6B93F8;--accent-deep:#2B4F9E;
+  --accent-dim:rgba(78,124,246,0.5);--accent-glow:rgba(78,124,246,0.14);--accent-soft:rgba(78,124,246,0.08);
+  /* Dorado champán — lujo, uso mínimo */
+  --gold:#C9A961;--gold-dim:rgba(201,169,97,0.5);--gold-soft:rgba(201,169,97,0.10);
+  /* Tipografía */
+  --serif:'Instrument Serif',Georgia,serif;
+  --sans:'Inter',system-ui,-apple-system,sans-serif;
+  --mono:'JetBrains Mono',ui-monospace,monospace;
+  /* Easing suave premium */
+  --ease:cubic-bezier(0.16,1,0.3,1);
+  --ease-out:cubic-bezier(0.22,0.61,0.36,1);
 }
 *{margin:0;padding:0;box-sizing:border-box}
-html{scroll-behavior:smooth}
-html.snap{scroll-snap-type:y proximity}
-body{font-family:var(--mono);background:var(--bg);color:var(--text);overflow-x:hidden;line-height:1.6;-webkit-font-smoothing:antialiased}
+html{
+  scroll-behavior:smooth;
+  -webkit-text-size-adjust:100%;
+  text-size-adjust:100%;
+}
+body{
+  font-family:var(--sans);background:var(--bg);color:var(--text);
+  line-height:1.6;overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;
+  -webkit-tap-highlight-color:transparent;
+  text-rendering:optimizeLegibility;
+}
+/* iOS: momentum scroll + safe areas */
+@supports(-webkit-touch-callout:none){
+  body{-webkit-overflow-scrolling:touch}
+}
 ::selection{background:var(--accent);color:#fff}
-::-webkit-scrollbar{width:0}
+::-webkit-scrollbar{width:0;height:0}
 
-/* Grid de fondo global */
-.bg-grid{position:fixed;inset:0;background-image:linear-gradient(var(--border2) 1px,transparent 1px),linear-gradient(90deg,var(--border2) 1px,transparent 1px);background-size:60px 60px;pointer-events:none;z-index:0;mask-image:radial-gradient(ellipse 90% 70% at 50% 30%,#000 20%,transparent 80%);-webkit-mask-image:radial-gradient(ellipse 90% 70% at 50% 30%,#000 20%,transparent 80%)}
+/* Halo de fondo — degradado sutil radial */
+.halo{position:fixed;inset:0;z-index:0;pointer-events:none;
+  background:
+    radial-gradient(ellipse 60% 50% at 50% -5%,var(--accent-soft),transparent 60%),
+    radial-gradient(ellipse 40% 40% at 85% 20%,var(--gold-soft),transparent 55%);
+}
+.grain{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:0.4;
+  background-image:linear-gradient(var(--border2) 1px,transparent 1px),linear-gradient(90deg,var(--border2) 1px,transparent 1px);
+  background-size:72px 72px;
+  -webkit-mask-image:radial-gradient(ellipse 85% 65% at 50% 25%,#000 10%,transparent 75%);
+  mask-image:radial-gradient(ellipse 85% 65% at 50% 25%,#000 10%,transparent 75%);
+}
 
-.wrap{max-width:1160px;margin:0 auto;padding:0 24px;position:relative;z-index:2;width:100%}
+.wrap{max-width:1180px;margin:0 auto;padding:0 max(24px,env(safe-area-inset-left));position:relative;z-index:2;width:100%}
 
 /* ── NAV ── */
-nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(0,0,0,0.55);backdrop-filter:blur(24px) saturate(160%);-webkit-backdrop-filter:blur(24px) saturate(160%);border-bottom:1px solid var(--border);height:56px;display:flex;align-items:center;transition:background .3s}
-.nav-inner{max-width:1160px;width:100%;margin:0 auto;padding:0 24px;display:flex;align-items:center;justify-content:space-between}
-.nav-logo{font-size:15px;font-weight:700;letter-spacing:-0.5px;color:var(--text);text-decoration:none}
-.nav-logo span{color:var(--accent)}
-.nav-links{display:flex;gap:28px;list-style:none}
-.nav-links a{font-size:12px;color:var(--text2);text-decoration:none;transition:color .15s;text-transform:uppercase;letter-spacing:0.03em}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;
+  background:rgba(11,15,26,0.7);
+  -webkit-backdrop-filter:blur(20px) saturate(140%);backdrop-filter:blur(20px) saturate(140%);
+  border-bottom:1px solid var(--border);height:60px;display:flex;align-items:center;
+  transition:background .4s var(--ease),border-color .4s var(--ease);
+  padding-top:env(safe-area-inset-top)}
+.nav-inner{max-width:1180px;width:100%;margin:0 auto;padding:0 24px;display:flex;align-items:center;justify-content:space-between}
+.nav-logo{font-family:var(--sans);font-size:16px;font-weight:700;letter-spacing:-0.4px;color:var(--text);text-decoration:none;display:flex;align-items:center;gap:2px}
+.nav-logo b{color:var(--accent);font-weight:700}
+.nav-links{display:flex;gap:32px;list-style:none}
+.nav-links a{font-size:13px;font-weight:500;color:var(--text2);text-decoration:none;transition:color .3s var(--ease);letter-spacing:0.01em}
 .nav-links a:hover{color:var(--text)}
-.nav-cta{font-size:12px;font-weight:700;background:transparent;color:var(--accent);border:1px solid var(--accent-dim);border-radius:2px;padding:8px 16px;text-decoration:none;transition:all .2s;text-transform:uppercase;letter-spacing:0.04em}
-.nav-cta:hover{background:var(--accent);color:#fff;box-shadow:0 0 24px var(--accent-glow)}
-.nav-toggle{display:none;background:none;border:none;color:var(--text);font-size:20px;cursor:pointer}
+.nav-cta{font-size:13px;font-weight:600;background:var(--accent);color:#fff;border:none;border-radius:8px;padding:9px 18px;text-decoration:none;transition:all .3s var(--ease);letter-spacing:0.01em;box-shadow:0 1px 0 rgba(255,255,255,0.1) inset,0 8px 24px -8px var(--accent)}
+.nav-cta:hover{background:var(--accent-bright);transform:translateY(-1px);box-shadow:0 1px 0 rgba(255,255,255,0.15) inset,0 12px 28px -8px var(--accent)}
+.nav-toggle{display:none;background:none;border:none;color:var(--text);cursor:pointer;padding:6px}
+.nav-toggle svg{display:block}
 
-/* ── PANELS (scroll-snap secciones) ── */
-.panel{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;padding:90px 24px;scroll-snap-align:start;overflow:hidden}
-.panel-tall{min-height:auto;scroll-snap-align:none;padding:110px 24px}
+/* ── Secciones ── */
+section{position:relative;z-index:2;padding:120px 24px}
+.center{text-align:center;display:flex;flex-direction:column;align-items:center}
+
+/* ── Tipografía ── */
+.eyebrow{font-family:var(--mono);font-size:12px;font-weight:500;letter-spacing:0.16em;text-transform:uppercase;color:var(--accent);margin-bottom:24px;display:inline-flex;align-items:center;gap:8px}
+.eyebrow::before{content:'';width:24px;height:1px;background:var(--accent);opacity:0.6}
+.eyebrow.gold{color:var(--gold)}.eyebrow.gold::before{background:var(--gold)}
+.display{font-family:var(--serif);font-weight:400;font-size:clamp(44px,7.5vw,88px);line-height:1.02;letter-spacing:-0.5px;margin-bottom:28px}
+.display em{font-style:italic;color:var(--accent)}
+.h2{font-family:var(--serif);font-weight:400;font-size:clamp(32px,5vw,56px);line-height:1.05;letter-spacing:-0.4px;margin-bottom:20px}
+.h2 em{font-style:italic;color:var(--accent)}
+.lead{font-family:var(--sans);font-size:clamp(15px,1.6vw,18px);font-weight:400;color:var(--text2);max-width:600px;line-height:1.65}
 
 /* ── Botones ── */
-.btn-primary{font-size:13px;font-weight:700;background:var(--accent);color:#fff;border:1px solid var(--accent);border-radius:2px;padding:14px 28px;text-decoration:none;transition:all .2s;text-transform:uppercase;letter-spacing:0.04em;display:inline-flex;align-items:center;gap:8px}
-.btn-primary:hover{background:#0077ed;box-shadow:0 0 32px var(--accent-glow);transform:translateY(-1px)}
-.btn-ghost{font-size:13px;font-weight:700;background:transparent;color:var(--text);border:1px solid var(--border);border-radius:2px;padding:14px 28px;text-decoration:none;transition:all .2s;text-transform:uppercase;letter-spacing:0.04em}
-.btn-ghost:hover{border-color:var(--text2);background:rgba(232,232,232,0.04)}
+.btn{font-family:var(--sans);font-size:14px;font-weight:600;border-radius:9px;padding:13px 26px;text-decoration:none;transition:all .35s var(--ease);letter-spacing:0.01em;display:inline-flex;align-items:center;gap:9px;cursor:pointer;border:1px solid transparent}
+.btn-primary{background:var(--accent);color:#fff;box-shadow:0 1px 0 rgba(255,255,255,0.12) inset,0 10px 30px -10px var(--accent)}
+.btn-primary:hover{background:var(--accent-bright);transform:translateY(-2px);box-shadow:0 1px 0 rgba(255,255,255,0.18) inset,0 16px 36px -10px var(--accent)}
+.btn-ghost{background:rgba(180,196,230,0.04);color:var(--text);border:1px solid var(--border-strong)}
+.btn-ghost:hover{background:rgba(180,196,230,0.08);border-color:var(--text3);transform:translateY(-2px)}
+.btn .arr{transition:transform .35s var(--ease)}
+.btn:hover .arr{transform:translateX(4px)}
 
-/* ── Tipografía secciones ── */
-.eyebrow{font-size:11px;font-weight:700;letter-spacing:0.24em;text-transform:uppercase;color:var(--accent);margin-bottom:22px}
-.eyebrow::before{content:'[ '}.eyebrow::after{content:' ]'}
-.label{font-size:11px;font-weight:700;letter-spacing:0.22em;text-transform:uppercase;color:var(--accent);margin-bottom:18px}
-.label::before{content:'// '}
-.big-title{font-family:var(--dot);font-size:clamp(38px,7vw,84px);font-weight:900;letter-spacing:-1px;line-height:0.98;margin-bottom:26px}
-.big-title em{font-style:normal;color:var(--accent);text-shadow:0 0 40px var(--accent-glow)}
-.sec-title{font-size:clamp(26px,4.2vw,46px);font-weight:700;letter-spacing:-1px;line-height:1.05;margin-bottom:18px}
-.sec-title em{font-style:normal;color:var(--accent)}
-.lead{font-size:clamp(14px,1.8vw,17px);color:var(--text2);max-width:580px;line-height:1.7}
+/* ── Animaciones de entrada (suaves) ── */
+.rise{opacity:0;transform:translateY(24px);transition:opacity 1s var(--ease),transform 1s var(--ease);will-change:opacity,transform}
+.rise.in{opacity:1;transform:translateY(0)}
+.d1{transition-delay:.1s}.d2{transition-delay:.2s}.d3{transition-delay:.3s}.d4{transition-delay:.4s}.d5{transition-delay:.5s}
+@media(prefers-reduced-motion:reduce){
+  .rise{transition:opacity .4s ease;transform:none}
+  *{scroll-behavior:auto!important}
+}
 
-/* ── Animaciones de entrada ── */
-[data-anim]{opacity:0;transform:translateY(30px);transition:opacity .8s cubic-bezier(.2,.7,.2,1),transform .8s cubic-bezier(.2,.7,.2,1)}
-[data-anim].in{opacity:1;transform:translateY(0)}
-[data-anim="1"]{transition-delay:.08s}[data-anim="2"]{transition-delay:.16s}[data-anim="3"]{transition-delay:.24s}[data-anim="4"]{transition-delay:.32s}[data-anim="5"]{transition-delay:.40s}
-
-/* ══ HERO — mockup de producto flotante ══ */
-.hero-stack{position:relative;width:100%;max-width:900px;margin-top:56px;perspective:1600px}
-.hero-mock{border:1px solid var(--border);border-radius:8px;background:var(--bg2);overflow:hidden;box-shadow:0 40px 120px rgba(0,113,227,0.12),0 0 0 1px var(--border);transform:rotateX(8deg);transform-origin:center top;opacity:0;animation:mockIn 1.2s .5s cubic-bezier(.2,.7,.2,1) forwards}
-@keyframes mockIn{from{opacity:0;transform:rotateX(20deg) translateY(60px) scale(.94)}to{opacity:1;transform:rotateX(6deg) translateY(0) scale(1)}}
-.mock-bar{display:flex;align-items:center;gap:8px;padding:11px 16px;border-bottom:1px solid var(--border);background:var(--bg3)}
-.mock-bar .dots{display:flex;gap:6px}
-.mock-bar .dots i{width:11px;height:11px;border-radius:50%;background:var(--border);display:block}
+/* ── HERO mockup ── */
+.hero{padding-top:160px;padding-bottom:100px;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}
+.hero-stack{position:relative;width:100%;max-width:940px;margin-top:64px}
+.hero-mock{border:1px solid var(--border-strong);border-radius:14px;background:linear-gradient(180deg,var(--bg2),var(--bg));overflow:hidden;
+  box-shadow:0 1px 0 rgba(255,255,255,0.04) inset,0 50px 120px -30px rgba(0,0,0,0.7),0 0 80px -40px var(--accent-glow);
+  opacity:0;transform:translateY(50px) scale(0.97);transition:opacity 1.3s var(--ease) .4s,transform 1.3s var(--ease) .4s;will-change:opacity,transform}
+.hero-mock.in{opacity:1;transform:translateY(0) scale(1)}
+.mock-bar{display:flex;align-items:center;gap:8px;padding:13px 18px;border-bottom:1px solid var(--border);background:var(--bg3)}
+.mock-bar .dots{display:flex;gap:7px}
+.mock-bar .dots i{width:11px;height:11px;border-radius:50%;display:block}
 .mock-bar .dots i:nth-child(1){background:#ff5f56}.mock-bar .dots i:nth-child(2){background:#ffbd2e}.mock-bar .dots i:nth-child(3){background:#27c93f}
-.mock-bar .url{font-size:11px;color:var(--text3);margin-left:12px;letter-spacing:0.03em}
-.mock-body{display:grid;grid-template-columns:180px 1fr;min-height:340px}
-.mock-side{border-right:1px solid var(--border);padding:16px 0;background:rgba(0,0,0,0.3)}
-.mock-side .si{display:flex;align-items:center;gap:10px;padding:9px 18px;font-size:11.5px;color:var(--text3);cursor:default;transition:all .3s}
-.mock-side .si.on{color:var(--accent);border-left:2px solid var(--accent);background:var(--accent-glow)}
-.mock-side .si .d{width:14px;text-align:center}
-.mock-main{padding:20px;position:relative}
-.mock-h{font-size:13px;color:var(--text2);margin-bottom:16px;display:flex;justify-content:space-between;align-items:center}
-.mock-h b{color:var(--text);font-weight:700}
-.mock-kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:18px}
-.kpi{border:1px solid var(--border);border-radius:5px;padding:14px;background:var(--bg3)}
-.kpi .kv{font-family:var(--dot);font-size:26px;font-weight:900;color:var(--accent);line-height:1}
-.kpi .kl{font-size:9.5px;color:var(--text3);text-transform:uppercase;letter-spacing:0.06em;margin-top:6px}
-/* barras que crecen */
-.mock-chart{display:flex;align-items:flex-end;gap:8px;height:90px;padding:12px;border:1px solid var(--border);border-radius:5px;background:var(--bg3)}
-.mock-chart .bar{flex:1;background:linear-gradient(180deg,var(--accent),var(--accent-dim));border-radius:2px 2px 0 0;height:0;transition:height 1s cubic-bezier(.2,.7,.2,1)}
+.mock-bar .url{font-family:var(--mono);font-size:11px;color:var(--text3);margin-left:14px;letter-spacing:0.02em}
+.mock-body{display:grid;grid-template-columns:190px 1fr;min-height:360px;text-align:left}
+.mock-side{border-right:1px solid var(--border);padding:18px 0;background:rgba(0,0,0,0.25)}
+.mock-side .si{display:flex;align-items:center;gap:11px;padding:10px 20px;font-size:12.5px;color:var(--text3);transition:all .4s var(--ease)}
+.mock-side .si svg{width:15px;height:15px;flex-shrink:0;opacity:0.7}
+.mock-side .si.on{color:var(--accent);box-shadow:inset 2px 0 0 var(--accent);background:var(--accent-soft)}
+.mock-side .si.on svg{opacity:1}
+.mock-main{padding:24px}
+.mock-h{font-size:14px;color:var(--text2);margin-bottom:18px;display:flex;justify-content:space-between;align-items:center}
+.mock-h b{color:var(--text);font-weight:600}
+.mock-h .live{display:inline-flex;align-items:center;gap:6px;font-family:var(--mono);font-size:11px;color:#3ECF8E}
+.mock-h .live::before{content:'';width:6px;height:6px;border-radius:50%;background:#3ECF8E;box-shadow:0 0 8px #3ECF8E;animation:pulse 2s var(--ease) infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.4}}
+.mock-kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:20px}
+.kpi{border:1px solid var(--border);border-radius:10px;padding:16px;background:var(--bg3)}
+.kpi .kv{font-family:var(--sans);font-size:28px;font-weight:700;color:var(--text);line-height:1;letter-spacing:-1px}
+.kpi .kv .u{color:var(--accent);font-size:18px}
+.kpi .kl{font-size:11px;color:var(--text3);margin-top:7px;letter-spacing:0.02em}
+.mock-chart{display:flex;align-items:flex-end;gap:9px;height:96px;padding:14px;border:1px solid var(--border);border-radius:10px;background:var(--bg3)}
+.mock-chart .bar{flex:1;background:linear-gradient(180deg,var(--accent-bright),var(--accent-deep));border-radius:3px 3px 0 0;height:6px;transition:height 1.2s var(--ease);will-change:height}
 .mock-chart.go .bar{height:var(--h)}
+.mock-chart .bar:last-child{background:linear-gradient(180deg,var(--gold),rgba(201,169,97,0.4))}
 
-/* ══ Chat MLL que se escribe ══ */
-.chat{border:1px solid var(--border);border-radius:8px;background:var(--bg2);overflow:hidden;max-width:640px;width:100%;box-shadow:0 30px 80px rgba(0,0,0,0.5)}
-.chat-head{display:flex;align-items:center;gap:8px;padding:12px 16px;border-bottom:1px solid var(--border);background:var(--bg3)}
-.chat-head .dots{display:flex;gap:6px}.chat-head .dots i{width:10px;height:10px;border-radius:50%;background:var(--border);display:block}
+/* ── Chat ── */
+.chat{border:1px solid var(--border-strong);border-radius:14px;background:linear-gradient(180deg,var(--bg2),var(--bg));overflow:hidden;max-width:660px;width:100%;box-shadow:0 40px 100px -40px rgba(0,0,0,0.8)}
+.chat-head{display:flex;align-items:center;gap:8px;padding:14px 18px;border-bottom:1px solid var(--border);background:var(--bg3)}
+.chat-head .dots{display:flex;gap:7px}.chat-head .dots i{width:11px;height:11px;border-radius:50%;display:block}
 .chat-head .dots i:nth-child(1){background:#ff5f56}.chat-head .dots i:nth-child(2){background:#ffbd2e}.chat-head .dots i:nth-child(3){background:#27c93f}
-.chat-head .t{font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:0.1em;margin-left:8px}
-.chat-body{padding:20px;display:flex;flex-direction:column;gap:14px;min-height:280px}
-.cmsg{display:flex;gap:12px;align-items:flex-start;opacity:0;transform:translateY(12px);transition:all .5s}
+.chat-head .t{font-family:var(--mono);font-size:11px;color:var(--text3);letter-spacing:0.04em;margin-left:10px}
+.chat-body{padding:22px;display:flex;flex-direction:column;gap:16px;min-height:300px}
+.cmsg{display:flex;gap:13px;align-items:flex-start;opacity:0;transform:translateY(10px);transition:opacity .6s var(--ease),transform .6s var(--ease)}
 .cmsg.show{opacity:1;transform:translateY(0)}
-.cmsg .av{width:28px;height:28px;border-radius:3px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700}
+.cmsg .av{width:30px;height:30px;border-radius:8px;flex-shrink:0;display:flex;align-items:center;justify-content:center}
+.cmsg .av svg{width:16px;height:16px}
 .cmsg.ai .av{background:var(--accent);color:#fff}
-.cmsg.user .av{background:var(--bg3);color:var(--text2);border:1px solid var(--border)}
-.cmsg .bub{font-size:13px;line-height:1.65;color:var(--text);background:var(--bg3);border:1px solid var(--border);border-radius:4px;padding:12px 14px;flex:1}
-.cmsg.user .bub{background:transparent;color:var(--text2)}
-.srow{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px dashed var(--border);font-size:12px}
-.srow:last-child{border-bottom:none}.srow .k{color:var(--text2)}.srow .v{color:var(--accent);font-weight:700}.srow .v.hot{color:var(--accent3)}
-.typing{display:inline-flex;gap:4px;padding:4px 0}
-.typing i{width:6px;height:6px;border-radius:50%;background:var(--text3);animation:blink 1.2s infinite}
+.cmsg.user .av{background:var(--bg4);color:var(--text2);border:1px solid var(--border)}
+.cmsg .bub{font-size:13.5px;line-height:1.6;color:var(--text);background:var(--bg3);border:1px solid var(--border);border-radius:11px;border-top-left-radius:3px;padding:13px 15px;flex:1}
+.cmsg.user .bub{background:transparent;color:var(--text2);border-top-left-radius:11px;border-top-right-radius:3px}
+.srow{display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid var(--border2);font-size:12.5px}
+.srow:last-child{border-bottom:none}.srow .k{color:var(--text2)}.srow .v{color:var(--accent);font-weight:600}.srow .v.gold{color:var(--gold)}
+.typing{display:inline-flex;gap:4px;padding:5px 2px}
+.typing i{width:6px;height:6px;border-radius:50%;background:var(--text3);animation:tb 1.4s var(--ease) infinite}
 .typing i:nth-child(2){animation-delay:.2s}.typing i:nth-child(3){animation-delay:.4s}
-@keyframes blink{0%,60%,100%{opacity:.3}30%{opacity:1}}
+@keyframes tb{0%,60%,100%{opacity:.25;transform:translateY(0)}30%{opacity:1;transform:translateY(-3px)}}
 
-/* ══ Grid features ══ */
-.fgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);border:1px solid var(--border);width:100%}
-.fcell{background:var(--bg);padding:30px 26px;transition:background .3s}
-.fcell:hover{background:var(--bg2)}
-.fcell .ico{font-size:24px;margin-bottom:16px;display:block}
-.fcell h3{font-size:15px;font-weight:700;margin-bottom:10px;letter-spacing:-0.3px;white-space:pre-line;line-height:1.2}
-.fcell p{font-size:12px;color:var(--text2);line-height:1.6}
-.fcell .tag{font-size:10px;color:var(--accent);text-transform:uppercase;letter-spacing:0.1em;margin-top:14px;display:inline-block}
-.fcell .tag::before{content:'● '}
+/* ── Grid features ── */
+.fgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;width:100%;text-align:left}
+.fcard{background:linear-gradient(180deg,var(--bg2),var(--bg));border:1px solid var(--border);border-radius:14px;padding:30px 28px;transition:all .5s var(--ease);position:relative;overflow:hidden}
+.fcard::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--accent-dim),transparent);opacity:0;transition:opacity .5s var(--ease)}
+.fcard:hover{border-color:var(--border-strong);transform:translateY(-4px);box-shadow:0 24px 50px -24px rgba(0,0,0,0.6)}
+.fcard:hover::before{opacity:1}
+.fcard .ficon{width:44px;height:44px;border-radius:11px;background:var(--accent-soft);border:1px solid var(--accent-dim);display:flex;align-items:center;justify-content:center;margin-bottom:20px;color:var(--accent)}
+.fcard .ficon svg{width:21px;height:21px}
+.fcard h3{font-family:var(--sans);font-size:17px;font-weight:600;margin-bottom:10px;letter-spacing:-0.3px}
+.fcard p{font-size:13.5px;color:var(--text2);line-height:1.62}
+.fcard .tag{font-family:var(--mono);font-size:10.5px;color:var(--text3);text-transform:uppercase;letter-spacing:0.08em;margin-top:16px;display:inline-flex;align-items:center;gap:6px}
+.fcard .tag::before{content:'';width:5px;height:5px;border-radius:50%;background:var(--accent)}
 
-/* ══ Alertas ══ */
-.agrid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;width:100%}
-.acard{border:1px solid var(--border);border-radius:6px;padding:22px;background:var(--bg2);transition:all .3s}
-.acard:hover{border-color:var(--accent-dim);background:var(--bg3);transform:translateY(-3px)}
-.acard .ico{font-size:20px;margin-bottom:12px}
-.acard h3{font-size:14px;font-weight:700;margin-bottom:8px}
-.acard p{font-size:12px;color:var(--text2);line-height:1.55;margin-bottom:12px}
-.acard .badge{font-size:9.5px;color:var(--accent3);border:1px solid rgba(255,159,10,0.3);border-radius:2px;padding:3px 8px;text-transform:uppercase;letter-spacing:0.06em}
+/* ── Alertas ── */
+.agrid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;width:100%;text-align:left}
+.acard{border:1px solid var(--border);border-radius:13px;padding:24px;background:var(--bg2);transition:all .5s var(--ease)}
+.acard:hover{border-color:var(--border-strong);transform:translateY(-4px);box-shadow:0 20px 44px -22px rgba(0,0,0,0.6)}
+.acard .aicon{width:38px;height:38px;border-radius:10px;background:var(--bg4);display:flex;align-items:center;justify-content:center;margin-bottom:16px;color:var(--accent)}
+.acard .aicon svg{width:18px;height:18px}
+.acard h3{font-size:15px;font-weight:600;margin-bottom:9px}
+.acard p{font-size:13px;color:var(--text2);line-height:1.58;margin-bottom:14px}
+.acard .badge{font-family:var(--mono);font-size:10px;color:var(--gold);border:1px solid var(--gold-dim);border-radius:6px;padding:4px 9px;letter-spacing:0.04em}
 
-/* ══ Módulos ══ */
-.mgrid{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;width:100%}
-.mchip{border:1px solid var(--border);border-radius:4px;padding:14px;background:var(--bg2);transition:all .3s}
-.mchip:hover{border-color:var(--accent-dim);transform:translateY(-2px);background:var(--bg3)}
-.mchip .ico{font-size:17px;margin-bottom:9px}
-.mchip h4{font-size:11.5px;font-weight:700;margin-bottom:3px;line-height:1.2}
-.mchip p{font-size:9.5px;color:var(--text3);line-height:1.35}
+/* ── Módulos ── */
+.mgrid{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;width:100%;text-align:left}
+.mchip{border:1px solid var(--border);border-radius:11px;padding:16px;background:var(--bg2);transition:all .45s var(--ease)}
+.mchip:hover{border-color:var(--accent-dim);transform:translateY(-3px);background:var(--bg3)}
+.mchip .micon{width:30px;height:30px;border-radius:8px;background:var(--accent-soft);display:flex;align-items:center;justify-content:center;margin-bottom:11px;color:var(--accent)}
+.mchip .micon svg{width:15px;height:15px}
+.mchip h4{font-size:12.5px;font-weight:600;margin-bottom:4px;letter-spacing:-0.2px}
+.mchip p{font-size:10.5px;color:var(--text3);line-height:1.4}
 
-/* ══ Stats ══ */
-.sgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border);border:1px solid var(--border);width:100%}
-.sbox{background:var(--bg);padding:38px 22px;text-align:center}
-.sbox .n{font-family:var(--dot);font-size:clamp(38px,5.5vw,60px);font-weight:900;color:var(--accent);line-height:1;margin-bottom:10px;text-shadow:0 0 30px var(--accent-glow)}
-.sbox .l{font-size:10.5px;color:var(--text2);text-transform:uppercase;letter-spacing:0.09em}
+/* ── Stats ── */
+.sgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;width:100%}
+.sbox{background:linear-gradient(180deg,var(--bg2),var(--bg));border:1px solid var(--border);border-radius:14px;padding:40px 24px;text-align:center;transition:all .5s var(--ease)}
+.sbox:hover{border-color:var(--border-strong);transform:translateY(-3px)}
+.sbox .n{font-family:var(--serif);font-size:clamp(44px,6vw,64px);font-weight:400;color:var(--text);line-height:1;margin-bottom:12px;letter-spacing:-1px}
+.sbox .n em{font-style:normal;color:var(--accent)}
+.sbox .l{font-size:12px;color:var(--text2);letter-spacing:0.02em}
 
-/* ══ Comparativa ══ */
-.cmp{border:1px solid var(--border);border-radius:6px;overflow:hidden;width:100%}
+/* ── Comparativa ── */
+.cmp{border:1px solid var(--border);border-radius:14px;overflow:hidden;width:100%;background:var(--bg2)}
 .cmp table{width:100%;border-collapse:collapse}
-.cmp th,.cmp td{padding:14px 18px;text-align:left;font-size:12px;border-bottom:1px solid var(--border)}
-.cmp thead th{font-size:10.5px;text-transform:uppercase;letter-spacing:0.08em;color:var(--text3);background:var(--bg3)}
+.cmp th,.cmp td{padding:16px 22px;text-align:left;font-size:13px;border-bottom:1px solid var(--border)}
+.cmp thead th{font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:0.06em;color:var(--text3);background:var(--bg3);font-weight:500}
 .cmp thead th:last-child{color:var(--accent)}
-.cmp td:first-child{color:var(--text2)}.cmp td:nth-child(2){color:var(--text3)}.cmp td:last-child{color:var(--text);font-weight:700}
-.cmp tbody tr{transition:background .2s}.cmp tbody tr:hover{background:var(--bg2)}
-.cmp .yes{color:var(--accent2)}
+.cmp tbody tr:last-child td{border-bottom:none}
+.cmp td:first-child{color:var(--text2);font-weight:500}.cmp td:nth-child(2){color:var(--text3)}.cmp td:last-child{color:var(--text)}
+.cmp tbody tr{transition:background .3s var(--ease)}.cmp tbody tr:hover{background:var(--bg3)}
+.cmp .yes{color:var(--accent);font-weight:600}
+.cmp .chk{display:inline-flex;align-items:center;gap:7px}
+.cmp .chk svg{width:15px;height:15px;color:var(--accent);flex-shrink:0}
 
-/* ══ Footer ══ */
-footer{border-top:1px solid var(--border);padding:56px 24px 36px;position:relative;z-index:2}
-.foot-in{max-width:1160px;margin:0 auto;display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:28px}
-.foot-brand .lg{font-size:16px;font-weight:700;margin-bottom:10px}.foot-brand .lg span{color:var(--accent)}
-.foot-brand p{font-size:12px;color:var(--text3);max-width:280px;line-height:1.6}
-.foot-links{display:flex;gap:22px}
-.foot-links a{font-size:12px;color:var(--text2);text-decoration:none;text-transform:uppercase;letter-spacing:0.04em}
+/* ── CTA ── */
+.cta-box{background:linear-gradient(180deg,var(--bg3),var(--bg2));border:1px solid var(--border-strong);border-radius:24px;padding:72px 40px;text-align:center;position:relative;overflow:hidden;width:100%;max-width:900px;margin:0 auto}
+.cta-box::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 50% 80% at 50% 0%,var(--accent-glow),transparent 70%);pointer-events:none}
+.cta-box .inner{position:relative;z-index:2;display:flex;flex-direction:column;align-items:center}
+
+/* ── Footer ── */
+footer{border-top:1px solid var(--border);padding:56px 24px calc(40px + env(safe-area-inset-bottom));position:relative;z-index:2}
+.foot-in{max-width:1180px;margin:0 auto;display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:28px}
+.foot-brand .lg{font-size:17px;font-weight:700;margin-bottom:10px}.foot-brand .lg b{color:var(--accent)}
+.foot-brand p{font-size:13px;color:var(--text3);max-width:300px;line-height:1.6}
+.foot-links{display:flex;gap:26px}
+.foot-links a{font-size:13px;color:var(--text2);text-decoration:none;transition:color .3s var(--ease)}
 .foot-links a:hover{color:var(--accent)}
-.foot-bot{max-width:1160px;margin:36px auto 0;padding-top:22px;border-top:1px solid var(--border);font-size:11px;color:var(--text3);text-align:center;letter-spacing:0.03em}
+.foot-bot{max-width:1180px;margin:36px auto 0;padding-top:24px;border-top:1px solid var(--border);font-family:var(--mono);font-size:11px;color:var(--text3);text-align:center;letter-spacing:0.03em}
 
-/* ══ Scroll progress ══ */
-.progress{position:fixed;top:0;left:0;height:2px;background:var(--accent);z-index:200;width:0;box-shadow:0 0 10px var(--accent);transition:width .1s}
+/* ── Progress ── */
+.progress{position:fixed;top:0;left:0;height:2px;background:linear-gradient(90deg,var(--accent),var(--gold));z-index:200;width:0;transition:width .15s var(--ease-out)}
 
-/* ══ Responsive ══ */
+/* ── Responsive ── */
 @media(max-width:900px){
   .fgrid{grid-template-columns:repeat(2,1fr)}.mgrid{grid-template-columns:repeat(3,1fr)}
   .sgrid{grid-template-columns:repeat(2,1fr)}.agrid{grid-template-columns:1fr}
   .mock-body{grid-template-columns:1fr}.mock-side{display:none}
-  html.snap{scroll-snap-type:none}
+  section{padding:90px 24px}
 }
 @media(max-width:640px){
-  .nav-links{display:none}.nav-links.open{display:flex;position:fixed;top:56px;left:0;right:0;flex-direction:column;background:rgba(0,0,0,0.97);padding:24px;gap:18px;border-bottom:1px solid var(--border)}
+  .nav-links{display:none}
+  .nav-links.open{display:flex;position:fixed;top:calc(60px + env(safe-area-inset-top));left:0;right:0;flex-direction:column;background:rgba(11,15,26,0.98);-webkit-backdrop-filter:blur(20px);backdrop-filter:blur(20px);padding:24px;gap:20px;border-bottom:1px solid var(--border)}
   .nav-toggle{display:block}
   .fgrid,.mgrid,.sgrid{grid-template-columns:1fr}
-  .cmp{overflow-x:auto}.cmp table{min-width:520px}
+  .cmp{overflow-x:auto;-webkit-overflow-scrolling:touch}.cmp table{min-width:540px}
   .foot-in{flex-direction:column}
-  .panel{padding:80px 20px}
+  section{padding:80px 20px}
+  .hero{padding-top:130px}
+  .cta-box{padding:52px 26px;border-radius:20px}
 }
 </style>
 </head>
 <body>
-<div class="bg-grid"></div>
+<div class="halo"></div>
+<div class="grain"></div>
 <div class="progress" id="progress"></div>
 
 <nav>
   <div class="nav-inner">
-    <a href="#top" class="nav-logo">Playa<span>MX</span>CRM</a>
+    <a href="#top" class="nav-logo">Playa<b>MX</b>CRM</a>
     <ul class="nav-links" id="navLinks">
       <li><a href="#mll">Inteligencia</a></li>
-      <li><a href="#crms">Módulos</a></li>
-      <li><a href="#alertas">Alertas</a></li>
+      <li><a href="#crms">Plataforma</a></li>
+      <li><a href="#alertas">Automatización</a></li>
       <li><a href="#comparativa">Comparativa</a></li>
-      <li><a href="#contacto">Contacto</a></li>
     </ul>
     <a href="#contacto" class="nav-cta">Solicitar demo</a>
-    <button class="nav-toggle" onclick="document.getElementById('navLinks').classList.toggle('open')">☰</button>
+    <button class="nav-toggle" onclick="document.getElementById('navLinks').classList.toggle('open')" aria-label="Menú">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><line x1="3" y1="7" x2="21" y2="7"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="17" x2="21" y2="17"/></svg>
+    </button>
   </div>
 </nav>
 
-<!-- ══ PANEL 1 — HERO ══ -->
-<section class="panel" id="top">
-  <div class="wrap" style="text-align:center;display:flex;flex-direction:column;align-items:center">
-    <div class="eyebrow" data-anim="1">CRM Inmobiliario · Playa del Carmen</div>
-    <h1 class="big-title" data-anim="2">El CRM que<br><em>piensa contigo.</em></h1>
-    <p class="lead" data-anim="3" style="margin:0 auto 36px">El primer sistema de gestión inmobiliaria de la Riviera Maya con inteligencia artificial integrada. Rentas, ventas y condominios en una plataforma que razona, alerta y actúa por ti.</p>
-    <div data-anim="4" style="display:flex;gap:16px;flex-wrap:wrap;justify-content:center">
-      <a href="#contacto" class="btn-primary">Solicitar demo →</a>
-      <a href="#mll" class="btn-ghost">Ver en acción</a>
+<!-- ══ HERO ══ -->
+<section class="hero" id="top">
+  <div class="wrap center">
+    <div class="eyebrow rise">CRM Inmobiliario · Riviera Maya</div>
+    <h1 class="display rise d1">Inteligencia para el<br>mercado <em>inmobiliario.</em></h1>
+    <p class="lead rise d2" style="margin:0 auto 40px">La plataforma de gestión que unifica rentas, ventas y condominios con inteligencia artificial integrada. Diseñada para operar, anticipar y decidir con la precisión que su patrimonio exige.</p>
+    <div class="rise d3" style="display:flex;gap:14px;flex-wrap:wrap;justify-content:center">
+      <a href="#contacto" class="btn btn-primary">Solicitar demostración <span class="arr">→</span></a>
+      <a href="#mll" class="btn btn-ghost">Conocer la plataforma</a>
     </div>
 
-    <!-- Mockup de producto animado -->
     <div class="hero-stack">
-      <div class="hero-mock">
+      <div class="hero-mock" id="heroMock">
         <div class="mock-bar">
           <div class="dots"><i></i><i></i><i></i></div>
-          <div class="url">playamxcrm.vercel.app/condominios/dashboard</div>
+          <div class="url">app.playamxcrm.com / panel</div>
         </div>
         <div class="mock-body">
           <div class="mock-side">
-            <div class="si"><span class="d">◎</span> Asistente MLL</div>
-            <div class="si on"><span class="d">▦</span> Dashboard</div>
-            <div class="si"><span class="d">🏢</span> Rentas</div>
-            <div class="si"><span class="d">🏗</span> Ventas</div>
-            <div class="si"><span class="d">🏛</span> Condominios</div>
-            <div class="si"><span class="d">🔐</span> Accesos</div>
-            <div class="si"><span class="d">⚖</span> Legal IA</div>
+            <div class="si"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="3"/><path d="M12 3v2M12 19v2M3 12h2M19 12h2"/></svg> Asistente MLL</div>
+            <div class="si on"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="7" height="9"/><rect x="14" y="3" width="7" height="5"/><rect x="14" y="12" width="7" height="9"/><rect x="3" y="16" width="7" height="5"/></svg> Panel general</div>
+            <div class="si"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 21h18M5 21V7l8-4v18M19 21V11l-6-4"/></svg> Rentas</div>
+            <div class="si"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 21h18M4 21V8l8-5 8 5v13M9 21v-6h6v6"/></svg> Ventas</div>
+            <div class="si"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="4" y="2" width="16" height="20"/><path d="M9 22v-4h6v4M8 6h.01M12 6h.01M16 6h.01M8 10h.01M12 10h.01M16 10h.01"/></svg> Condominios</div>
+            <div class="si"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg> Accesos</div>
+            <div class="si"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3l8 4v5c0 5-3.5 8-8 9-4.5-1-8-4-8-9V7z"/></svg> Asesor Legal</div>
           </div>
           <div class="mock-main">
-            <div class="mock-h"><b>Resumen de hoy</b> <span style="color:var(--accent2)">● En vivo</span></div>
+            <div class="mock-h"><b>Resumen operativo</b> <span class="live">En vivo</span></div>
             <div class="mock-kpis">
-              <div class="kpi"><div class="kv" data-kpi="128">0</div><div class="kl">Inmuebles</div></div>
-              <div class="kpi"><div class="kv" data-kpi="94">0</div><div class="kl">% Ocupación</div></div>
-              <div class="kpi"><div class="kv" data-kpi="17">0</div><div class="kl">Alertas</div></div>
+              <div class="kpi"><div class="kv" data-kpi="128">0</div><div class="kl">Inmuebles activos</div></div>
+              <div class="kpi"><div class="kv" data-kpi="94"><span data-kpi="94">0</span><span class="u">%</span></div><div class="kl">Ocupación</div></div>
+              <div class="kpi"><div class="kv" data-kpi="4"><span class="u">$</span><span data-kpi="4">0</span><span class="u">.2M</span></div><div class="kl">Cartera mensual</div></div>
             </div>
             <div class="mock-chart" id="heroChart">
-              <div class="bar" style="--h:45%"></div><div class="bar" style="--h:70%"></div>
-              <div class="bar" style="--h:55%"></div><div class="bar" style="--h:85%"></div>
-              <div class="bar" style="--h:65%"></div><div class="bar" style="--h:95%"></div>
-              <div class="bar" style="--h:78%"></div>
+              <div class="bar" style="--h:42%"></div><div class="bar" style="--h:64%"></div>
+              <div class="bar" style="--h:51%"></div><div class="bar" style="--h:78%"></div>
+              <div class="bar" style="--h:60%"></div><div class="bar" style="--h:88%"></div>
+              <div class="bar" style="--h:96%"></div>
             </div>
           </div>
         </div>
@@ -255,142 +333,140 @@ footer{border-top:1px solid var(--border);padding:56px 24px 36px;position:relati
   </div>
 </section>
 
-<!-- ══ PANEL 2 — MLL (chat que se escribe) ══ -->
-<section class="panel" id="mll">
-  <div class="wrap" style="display:flex;flex-direction:column;align-items:center;text-align:center">
-    <div class="label" data-anim="1">Machine Learning Layer</div>
-    <h2 class="sec-title" data-anim="2">No solo gestiona.<br><em>Ahora razona.</em></h2>
-    <p class="lead" data-anim="3" style="margin:0 auto 40px">Mientras los CRM tradicionales almacenan datos, PlayaMXCRM los interpreta. Pregúntale en lenguaje natural y responde con análisis real de tu pipeline.</p>
-    <div class="chat" id="chatDemo" data-anim="4">
+<!-- ══ MLL ══ -->
+<section id="mll">
+  <div class="wrap center">
+    <div class="eyebrow rise">Machine Learning Layer</div>
+    <h2 class="h2 rise d1">No solo administra.<br><em>Comprende.</em></h2>
+    <p class="lead rise d2" style="margin:0 auto 48px">Mientras un CRM convencional almacena información, PlayaMXCRM la interpreta. Consulte en lenguaje natural y reciba análisis del pipeline, evaluación de riesgo y recomendaciones fundamentadas en sus datos reales.</p>
+    <div class="chat rise d3" id="chatDemo">
       <div class="chat-head">
         <div class="dots"><i></i><i></i><i></i></div>
-        <div class="t">MLL · Asistente en tiempo real</div>
+        <div class="t">MLL · Asistente ejecutivo</div>
       </div>
       <div class="chat-body" id="chatBody"></div>
     </div>
   </div>
 </section>
 
-<!-- ══ PANEL 3 — CARACTERÍSTICAS ══ -->
-<section class="panel panel-tall" id="crms">
-  <div class="wrap" style="display:flex;flex-direction:column;align-items:center;text-align:center">
-    <div class="label" data-anim="1">Características</div>
-    <h2 class="sec-title" data-anim="2">Tres CRMs<br><em>en uno.</em></h2>
-    <p class="lead" data-anim="3" style="margin:0 auto 48px">Rentas, ventas y condominios desde una plataforma unificada, con IA que trabaja para ti las 24 horas.</p>
+<!-- ══ CARACTERÍSTICAS ══ -->
+<section id="crms">
+  <div class="wrap center">
+    <div class="eyebrow rise">La plataforma</div>
+    <h2 class="h2 rise d1">Tres sistemas.<br><em>Una sola inteligencia.</em></h2>
+    <p class="lead rise d2" style="margin:0 auto 56px">Rentas, ventas y condominios operando de forma unificada, con capacidades de inteligencia artificial que trabajan de manera continua.</p>
     <div class="fgrid">
-      <div class="fcell" data-anim="1"><span class="ico">◎</span><h3>Asistente
-MLL</h3><p>Pregunta en lenguaje natural. Recibe análisis del pipeline, redacción de contratos, alertas proactivas y estrategias — con datos reales de tu CRM.</p><span class="tag">IA en tiempo real</span></div>
-      <div class="fcell" data-anim="2"><span class="ico">🎯</span><h3>Scoring
-Predictivo</h3><p>Modelo de 5 dimensiones que analiza cada comprador e inquilino. Predice cierre, detecta riesgo de impago y recomienda la siguiente acción.</p><span class="tag">Machine Learning</span></div>
-      <div class="fcell" data-anim="3"><span class="ico">⚖️</span><h3>Asesor
-Legal IA</h3><p>Especializado en Quintana Roo. Zona restringida, fideicomiso Art. 27, ISR, ISABI, hipotecas y Ley de Condominios Q.Roo.</p><span class="tag">Claude AI</span></div>
-      <div class="fcell" data-anim="1"><span class="ico">🏢</span><h3>CRM
-Rentas</h3><p>Propietarios, inquilinos, contratos con depósito, geolocalización, amenidades, scoring, portal de inquilinos, CFDI 4.0 y WhatsApp.</p><span class="tag">Módulo completo</span></div>
-      <div class="fcell" data-anim="2"><span class="ico">🏗️</span><h3>CRM
-Ventas</h3><p>Pipeline visual 7 etapas, scoring de compradores, mapa satelital, contratos de promesa, brokers externos y tracking de comisiones.</p><span class="tag">Módulo completo</span></div>
-      <div class="fcell" data-anim="3"><span class="ico">🏛️</span><h3>CRM
-Condominios</h3><p>Complejos, cuotas, asambleas, certificados de no adeudo PDF, presupuesto anual, control de acceso biométrico y cumplimiento LFPDPPP.</p><span class="tag">Módulo completo</span></div>
+      <div class="fcard rise"><div class="ficon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M5 19l2-2M17 7l2-2"/></svg></div><h3>Asistente MLL</h3><p>Consulte en lenguaje natural y obtenga análisis del pipeline, redacción de contratos, alertas proactivas y estrategias de negociación fundamentadas en datos reales.</p><span class="tag">Inteligencia en tiempo real</span></div>
+      <div class="fcard rise d1"><div class="ficon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 3v18h18"/><path d="M7 14l4-4 3 3 5-6"/></svg></div><h3>Scoring predictivo</h3><p>Modelo de cinco dimensiones que evalúa cada comprador e inquilino, predice la probabilidad de cierre, detecta riesgo de impago y recomienda la acción óptima.</p><span class="tag">Machine Learning</span></div>
+      <div class="fcard rise d2"><div class="ficon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3l8 4v5c0 5-3.5 8-8 9-4.5-1-8-4-8-9V7z"/><path d="M9 12l2 2 4-4"/></svg></div><h3>Asesor legal IA</h3><p>Especializado en derecho inmobiliario de Quintana Roo: zona restringida, fideicomiso, régimen fiscal, hipotecas y Ley de Condominios del estado.</p><span class="tag">IA especializada</span></div>
+      <div class="fcard rise"><div class="ficon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 21h18M5 21V7l8-4v18M19 21V11l-6-4"/><path d="M9 9v.01M9 13v.01M9 17v.01"/></svg></div><h3>Gestión de rentas</h3><p>Propietarios, inquilinos, contratos con depósito, geolocalización, scoring, portal del inquilino, facturación CFDI 4.0 y notificaciones por WhatsApp.</p><span class="tag">Módulo completo</span></div>
+      <div class="fcard rise d1"><div class="ficon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 21h18M4 21V8l8-5 8 5v13M9 21v-6h6v6"/></svg></div><h3>Gestión de ventas</h3><p>Pipeline visual de siete etapas, scoring de compradores, mapa satelital, contratos de promesa y compraventa, brokers externos y seguimiento de comisiones.</p><span class="tag">Módulo completo</span></div>
+      <div class="fcard rise d2"><div class="ficon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="4" y="2" width="16" height="20" rx="1"/><path d="M9 22v-4h6v4M8 6h.01M12 6h.01M16 6h.01M8 10h.01M12 10h.01M16 10h.01M8 14h.01M12 14h.01M16 14h.01"/></svg></div><h3>Administración condominal</h3><p>Complejos, cuotas, asambleas, certificados de no adeudo, presupuesto anual, control de acceso biométrico y cumplimiento de la LFPDPPP.</p><span class="tag">Módulo completo</span></div>
     </div>
   </div>
 </section>
 
-<!-- ══ PANEL 4 — ALERTAS ══ -->
-<section class="panel panel-tall" id="alertas">
-  <div class="wrap" style="display:flex;flex-direction:column;align-items:center;text-align:center">
-    <div class="label" data-anim="1">Alertas inteligentes</div>
-    <h2 class="sec-title" data-anim="2">El sistema que<br><em>no duerme.</em></h2>
-    <p class="lead" data-anim="3" style="margin:0 auto 48px">Alertas automáticas por correo y notificaciones push. Nunca pierdas un vencimiento, incidencia urgente o contrato por renovar.</p>
+<!-- ══ ALERTAS ══ -->
+<section id="alertas">
+  <div class="wrap center">
+    <div class="eyebrow gold rise">Automatización</div>
+    <h2 class="h2 rise d1">Vigilancia continua.<br><em>Cero descuidos.</em></h2>
+    <p class="lead rise d2" style="margin:0 auto 56px">Alertas automáticas por correo y notificaciones push. Cada vencimiento, incidencia crítica y contrato por renovar es supervisado sin intervención manual.</p>
     <div class="agrid">
-      <div class="acard" data-anim="1"><div class="ico">⚡</div><h3>Incidencias HIGH</h3><p>Email automático al admin y propietario si una incidencia de alta prioridad lleva más de 48 horas abierta.</p><span class="badge">Inmediato · 48h</span></div>
-      <div class="acard" data-anim="2"><div class="ico">📅</div><h3>Vencimiento de contratos</h3><p>Notificaciones escalonadas a 90, 60, 30, 14, 7, 3 y 1 días antes. Admin, propietario e inquilino avisados a tiempo.</p><span class="badge">90 → 1 día</span></div>
-      <div class="acard" data-anim="3"><div class="ico">💰</div><h3>Rentas vencidas</h3><p>Seguimiento a 1, 3, 7, 14 y 30 días de mora. Resumen financiero diario al administrador a las 8 AM.</p><span class="badge">Diario 8 AM</span></div>
-      <div class="acard" data-anim="1"><div class="ico">🔔</div><h3>Push en navegador</h3><p>Service Worker integrado. Las alertas críticas llegan al escritorio o celular con el navegador en segundo plano.</p><span class="badge">Web Push API</span></div>
-      <div class="acard" data-anim="2"><div class="ico">🏠</div><h3>Inmuebles vacantes</h3><p>Alerta cuando un inmueble lleva más de 30 días sin ocupar, con sugerencias de acción para el propietario.</p><span class="badge">+30 días</span></div>
-      <div class="acard" data-anim="3"><div class="ico">🔐</div><h3>Control de acceso</h3><p>Suspensión automática por mantenimiento vencido. Notifica al propietario cada vez que su inquilino entra o sale.</p><span class="badge">Biométrico</span></div>
+      <div class="acard rise"><div class="aicon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M13 2L3 14h9l-1 8 10-12h-9z"/></svg></div><h3>Incidencias críticas</h3><p>Notificación automática al administrador y propietario cuando una incidencia de alta prioridad supera las 48 horas sin resolución.</p><span class="badge">Inmediato · 48 h</span></div>
+      <div class="acard rise d1"><div class="aicon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg></div><h3>Vencimiento de contratos</h3><p>Avisos escalonados a 90, 60, 30, 14, 7, 3 y 1 días. Administrador, propietario e inquilino informados en el momento preciso.</p><span class="badge">90 → 1 día</span></div>
+      <div class="acard rise d2"><div class="aicon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></div><h3>Rentas vencidas</h3><p>Seguimiento a 1, 3, 7, 14 y 30 días de mora, con resumen financiero enviado al administrador cada mañana.</p><span class="badge">Diario · 8:00</span></div>
+      <div class="acard rise"><div class="aicon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg></div><h3>Notificaciones push</h3><p>Service Worker integrado. Las alertas críticas llegan al escritorio o dispositivo móvil incluso con el navegador en segundo plano.</p><span class="badge">Web Push</span></div>
+      <div class="acard rise d1"><div class="aicon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 21h18M5 21V7l8-4v18M19 21V11l-6-4"/></svg></div><h3>Inmuebles vacantes</h3><p>Alerta automática cuando un inmueble supera 30 días sin ocupación, acompañada de sugerencias de acción para el propietario.</p><span class="badge">+30 días</span></div>
+      <div class="acard rise d2"><div class="aicon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></div><h3>Control de acceso</h3><p>Suspensión automática por mantenimiento vencido y notificación al propietario cada vez que su inquilino ingresa o sale del complejo.</p><span class="badge">Biométrico</span></div>
     </div>
   </div>
 </section>
 
-<!-- ══ PANEL 5 — MÓDULOS ══ -->
-<section class="panel panel-tall" id="modulos">
-  <div class="wrap" style="display:flex;flex-direction:column;align-items:center;text-align:center">
-    <div class="label" data-anim="1">49 módulos operativos</div>
-    <h2 class="sec-title" data-anim="2">Todo integrado.<br><em>Sin plugins.</em></h2>
-    <p class="lead" data-anim="3" style="margin:0 auto 48px">Una plataforma completa. Sin integraciones frágiles, sin costos ocultos.</p>
+<!-- ══ MÓDULOS ══ -->
+<section id="modulos">
+  <div class="wrap center">
+    <div class="eyebrow rise">49 módulos operativos</div>
+    <h2 class="h2 rise d1">Integración total.<br><em>Sin dependencias externas.</em></h2>
+    <p class="lead rise d2" style="margin:0 auto 56px">Una plataforma completa, sin integraciones frágiles ni costos ocultos.</p>
     <div class="mgrid">
-      <div class="mchip" data-anim="1"><div class="ico">◎</div><h4>Asistente MLL</h4><p>Análisis conversacional</p></div>
-      <div class="mchip" data-anim="1"><div class="ico">🎯</div><h4>Scoring IA</h4><p>Compradores e inquilinos</p></div>
-      <div class="mchip" data-anim="1"><div class="ico">⚖️</div><h4>Legal IA</h4><p>Derecho Q.Roo</p></div>
-      <div class="mchip" data-anim="1"><div class="ico">📄</div><h4>PDF Ejecutivo</h4><p>Reportes automáticos</p></div>
-      <div class="mchip" data-anim="1"><div class="ico">🔐</div><h4>Control Acceso</h4><p>Biométrico ZKTeco</p></div>
-      <div class="mchip" data-anim="2"><div class="ico">🚨</div><h4>Protección Civil</h4><p>Rutas de evacuación</p></div>
-      <div class="mchip" data-anim="2"><div class="ico">📊</div><h4>Presupuesto</h4><p>Anual por complejo</p></div>
-      <div class="mchip" data-anim="2"><div class="ico">🔒</div><h4>LFPDPPP</h4><p>Eliminación ARCO</p></div>
-      <div class="mchip" data-anim="2"><div class="ico">🔔</div><h4>Push</h4><p>Service Worker</p></div>
-      <div class="mchip" data-anim="2"><div class="ico">🗺️</div><h4>Geolocalización</h4><p>lat/lng + amenidades</p></div>
-      <div class="mchip" data-anim="3"><div class="ico">⬇</div><h4>CSV Universal</h4><p>Todos los módulos</p></div>
-      <div class="mchip" data-anim="3"><div class="ico">🛡</div><h4>Rate Limiting</h4><p>Endpoints protegidos</p></div>
-      <div class="mchip" data-anim="3"><div class="ico">🗳️</div><h4>Asambleas</h4><p>Votos en tiempo real</p></div>
-      <div class="mchip" data-anim="3"><div class="ico">💳</div><h4>Cuotas</h4><p>Cobros y morosidad</p></div>
-      <div class="mchip" data-anim="3"><div class="ico">📱</div><h4>WhatsApp</h4><p>Notificaciones auto</p></div>
-      <div class="mchip" data-anim="4"><div class="ico">🧾</div><h4>CFDI 4.0</h4><p>Facturación SAT</p></div>
-      <div class="mchip" data-anim="4"><div class="ico">📜</div><h4>Certificados</h4><p>No adeudo PDF</p></div>
-      <div class="mchip" data-anim="4"><div class="ico">🏠</div><h4>Pipeline 7</h4><p>Deals con IA</p></div>
-      <div class="mchip" data-anim="4"><div class="ico">🔑</div><h4>2FA + Audit</h4><p>Seguridad total</p></div>
-      <div class="mchip" data-anim="4"><div class="ico">📞</div><h4>Call Center</h4><p>Registro de llamadas</p></div>
+      <div class="mchip rise"><div class="micon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/></svg></div><h4>Asistente MLL</h4><p>Análisis conversacional</p></div>
+      <div class="mchip rise"><div class="micon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 3v18h18"/><path d="M7 14l4-4 3 3 5-6"/></svg></div><h4>Scoring IA</h4><p>Compradores e inquilinos</p></div>
+      <div class="mchip rise"><div class="micon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3l8 4v5c0 5-3.5 8-8 9-4.5-1-8-4-8-9V7z"/></svg></div><h4>Legal IA</h4><p>Derecho Q. Roo</p></div>
+      <div class="mchip rise"><div class="micon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg></div><h4>PDF ejecutivo</h4><p>Reportes automáticos</p></div>
+      <div class="mchip rise"><div class="micon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></div><h4>Control de acceso</h4><p>Biométrico ZKTeco</p></div>
+      <div class="mchip rise d1"><div class="micon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M13 2L3 14h9l-1 8 10-12h-9z"/></svg></div><h4>Protección civil</h4><p>Rutas de evacuación</p></div>
+      <div class="mchip rise d1"><div class="micon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 3v18h18"/><rect x="7" y="10" width="3" height="8"/><rect x="12" y="6" width="3" height="12"/><rect x="17" y="13" width="3" height="5"/></svg></div><h4>Presupuesto</h4><p>Anual por complejo</p></div>
+      <div class="mchip rise d1"><div class="micon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div><h4>LFPDPPP</h4><p>Eliminación ARCO</p></div>
+      <div class="mchip rise d1"><div class="micon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg></div><h4>Push</h4><p>Service Worker</p></div>
+      <div class="mchip rise d1"><div class="micon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 2a10 10 0 1 0 10 10"/><path d="M12 8v4l3 2"/></svg></div><h4>Geolocalización</h4><p>Ubicación y amenidades</p></div>
+      <div class="mchip rise d2"><div class="micon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3v14M6 11l6 6 6-6M4 21h16"/></svg></div><h4>Exportación CSV</h4><p>Todos los módulos</p></div>
+      <div class="mchip rise d2"><div class="micon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3l8 4v5c0 5-3.5 8-8 9-4.5-1-8-4-8-9V7z"/></svg></div><h4>Rate limiting</h4><p>Endpoints protegidos</p></div>
+      <div class="mchip rise d2"><div class="micon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/></svg></div><h4>Asambleas</h4><p>Votación en vivo</p></div>
+      <div class="mchip rise d2"><div class="micon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg></div><h4>Cuotas</h4><p>Cobros y morosidad</p></div>
+      <div class="mchip rise d2"><div class="micon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8z"/></svg></div><h4>WhatsApp</h4><p>Notificaciones</p></div>
+      <div class="mchip rise d3"><div class="micon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="4" y="2" width="16" height="20" rx="2"/><path d="M8 6h8M8 10h8M8 14h5"/></svg></div><h4>CFDI 4.0</h4><p>Facturación SAT</p></div>
+      <div class="mchip rise d3"><div class="micon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M9 15l2 2 4-4"/></svg></div><h4>Certificados</h4><p>No adeudo</p></div>
+      <div class="mchip rise d3"><div class="micon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 4h16v12H4z"/><path d="M4 20h16M8 8l3 3-3 3"/></svg></div><h4>Pipeline</h4><p>Siete etapas con IA</p></div>
+      <div class="mchip rise d3"><div class="micon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/><circle cx="12" cy="16" r="1"/></svg></div><h4>2FA + Auditoría</h4><p>Seguridad total</p></div>
+      <div class="mchip rise d3"><div class="micon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.9.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div><h4>Call center</h4><p>Registro de llamadas</p></div>
     </div>
   </div>
 </section>
 
-<!-- ══ PANEL 6 — STATS ══ -->
-<section class="panel" id="stats">
-  <div class="wrap" style="display:flex;flex-direction:column;align-items:center;text-align:center">
-    <div class="label" data-anim="1">Por qué PlayaMXCRM</div>
-    <h2 class="sec-title" data-anim="2">Construido para<br><em>Playa del Carmen.</em></h2>
-    <div class="sgrid" data-anim="3" style="margin-top:44px">
-      <div class="sbox"><div class="n" data-count="49">0</div><div class="l">Módulos operativos</div></div>
-      <div class="sbox"><div class="n" data-decimal="8.6">0</div><div class="l">Score / 10</div></div>
-      <div class="sbox"><div class="n" data-count="3">0</div><div class="l">CRMs en uno</div></div>
-      <div class="sbox"><div class="n" data-count="75">0</div><div class="l">Tablas estructuradas</div></div>
+<!-- ══ STATS ══ -->
+<section id="stats">
+  <div class="wrap center">
+    <div class="eyebrow gold rise">Respaldo técnico</div>
+    <h2 class="h2 rise d1">Construido para<br><em>la Riviera Maya.</em></h2>
+    <div class="sgrid rise d2" style="margin-top:52px">
+      <div class="sbox"><div class="n"><em data-count="49">0</em></div><div class="l">Módulos operativos</div></div>
+      <div class="sbox"><div class="n"><em data-decimal="8.6">0</em></div><div class="l">Índice de completitud</div></div>
+      <div class="sbox"><div class="n"><em data-count="3">0</em></div><div class="l">Sistemas unificados</div></div>
+      <div class="sbox"><div class="n"><em data-count="75">0</em></div><div class="l">Entidades de datos</div></div>
     </div>
   </div>
 </section>
 
-<!-- ══ PANEL 7 — COMPARATIVA ══ -->
-<section class="panel panel-tall" id="comparativa">
-  <div class="wrap" style="display:flex;flex-direction:column;align-items:center;text-align:center">
-    <div class="label" data-anim="1">MLL vs CRM tradicional</div>
-    <h2 class="sec-title" data-anim="2">No es un CRM.<br><em>Es más.</em></h2>
-    <p class="lead" data-anim="3" style="margin:0 auto 44px">Los CRM del pasado son obsoletos. PlayaMXCRM es lo que viene.</p>
-    <div class="cmp" data-anim="4">
+<!-- ══ COMPARATIVA ══ -->
+<section id="comparativa">
+  <div class="wrap center">
+    <div class="eyebrow rise">Diferenciación</div>
+    <h2 class="h2 rise d1">Más que un CRM.<br><em>Una ventaja competitiva.</em></h2>
+    <p class="lead rise d2" style="margin:0 auto 52px">La diferencia entre almacenar información y convertirla en decisiones.</p>
+    <div class="cmp rise d3">
       <table>
-        <thead><tr><th>Capacidad</th><th>CRM Tradicional</th><th>PlayaMXCRM + MLL</th></tr></thead>
+        <thead><tr><th>Capacidad</th><th>CRM convencional</th><th>PlayaMXCRM · MLL</th></tr></thead>
         <tbody>
-          <tr><td>Gestión de datos</td><td>Almacena</td><td><span class="yes">✓</span> Almacena + Interpreta</td></tr>
-          <tr><td>Alertas automáticas</td><td>Manual</td><td><span class="yes">✓</span> Email + Push · 48h/90d</td></tr>
-          <tr><td>Seguimientos</td><td>Tú los escribes</td><td><span class="yes">✓</span> IA los redacta</td></tr>
-          <tr><td>Análisis de pipeline</td><td>Reportes fijos</td><td><span class="yes">✓</span> Conversacional en vivo</td></tr>
-          <tr><td>Scoring de clientes</td><td>—</td><td><span class="yes">✓</span> 5 dimensiones predictivas</td></tr>
-          <tr><td>Contratos</td><td>Word/PDF manual</td><td><span class="yes">✓</span> Generados desde el chat</td></tr>
-          <tr><td>Asesoría legal</td><td>Abogado externo</td><td><span class="yes">✓</span> IA especializada Q.Roo 24/7</td></tr>
-          <tr><td>Control de acceso</td><td>—</td><td><span class="yes">✓</span> Biométrico ZKTeco</td></tr>
-          <tr><td>Cumplimiento MX</td><td>—</td><td><span class="yes">✓</span> LFPDPPP + Ley Q.Roo</td></tr>
-          <tr><td>Mercado objetivo</td><td>Genérico</td><td><span class="yes">✓</span> Riviera Maya específico</td></tr>
+          <tr><td>Gestión de datos</td><td>Almacenamiento</td><td class="yes"><span class="chk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg> Almacena e interpreta</span></td></tr>
+          <tr><td>Alertas automáticas</td><td>Manual</td><td class="yes"><span class="chk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg> Correo y push · 48 h / 90 días</span></td></tr>
+          <tr><td>Seguimientos</td><td>Redacción propia</td><td class="yes"><span class="chk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg> Redactados por IA</span></td></tr>
+          <tr><td>Análisis de pipeline</td><td>Reportes estáticos</td><td class="yes"><span class="chk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg> Conversacional en tiempo real</span></td></tr>
+          <tr><td>Evaluación de clientes</td><td>No disponible</td><td class="yes"><span class="chk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg> Scoring de cinco dimensiones</span></td></tr>
+          <tr><td>Contratos</td><td>Elaboración manual</td><td class="yes"><span class="chk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg> Generados por el asistente</span></td></tr>
+          <tr><td>Asesoría legal</td><td>Externa</td><td class="yes"><span class="chk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg> IA especializada 24/7</span></td></tr>
+          <tr><td>Control de acceso</td><td>No disponible</td><td class="yes"><span class="chk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg> Biométrico integrado</span></td></tr>
+          <tr><td>Cumplimiento normativo</td><td>No disponible</td><td class="yes"><span class="chk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg> LFPDPPP · Ley de Condominios</span></td></tr>
+          <tr><td>Especialización</td><td>Genérica</td><td class="yes"><span class="chk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg> Riviera Maya</span></td></tr>
         </tbody>
       </table>
     </div>
   </div>
 </section>
 
-<!-- ══ PANEL 8 — CTA FINAL ══ -->
-<section class="panel" id="contacto">
-  <div class="wrap" style="text-align:center;display:flex;flex-direction:column;align-items:center">
-    <div class="label" data-anim="1" style="margin-left:auto;margin-right:auto">Para empezar hoy</div>
-    <h2 class="big-title" data-anim="2" style="font-size:clamp(34px,6vw,72px)">El futuro del CRM<br><em>ya llegó.</em></h2>
-    <p class="lead" data-anim="3" style="margin:0 auto 40px">Solicita una demostración personalizada con tus datos reales. Sin compromiso, sin tarjeta de crédito.</p>
-    <div data-anim="4" style="display:flex;gap:16px;flex-wrap:wrap;justify-content:center">
-      <a href="mailto:zaero.hell@gmail.com?subject=Demo%20PlayaMXCRM" class="btn-primary">📧 Solicitar demo →</a>
-      <a href="https://wa.link/nm291n" class="btn-ghost">Por WhatsApp</a>
+<!-- ══ CTA ══ -->
+<section id="contacto">
+  <div class="wrap">
+    <div class="cta-box rise">
+      <div class="inner">
+        <div class="eyebrow gold" style="margin-left:auto;margin-right:auto">Solicite una demostración</div>
+        <h2 class="h2" style="margin-bottom:20px">Conozca la plataforma<br><em>con sus propios datos.</em></h2>
+        <p class="lead" style="margin:0 auto 40px">Agende una demostración ejecutiva personalizada. Sin compromiso y sin requerir información de pago.</p>
+        <div style="display:flex;gap:14px;flex-wrap:wrap;justify-content:center">
+          <a href="mailto:zaero.hell@gmail.com?subject=Demostraci%C3%B3n%20PlayaMXCRM" class="btn btn-primary">Agendar demostración <span class="arr">→</span></a>
+          <a href="https://wa.link/nm291n" class="btn btn-ghost">Contactar por WhatsApp</a>
+        </div>
+      </div>
     </div>
   </div>
 </section>
@@ -398,80 +474,93 @@ Condominios</h3><p>Complejos, cuotas, asambleas, certificados de no adeudo PDF, 
 <footer>
   <div class="foot-in">
     <div class="foot-brand">
-      <div class="lg">Playa<span>MX</span>CRM</div>
-      <p>Inteligencia inmobiliaria para la Riviera Maya. Rentas · Ventas · Condominios.</p>
+      <div class="lg">Playa<b>MX</b>CRM</div>
+      <p>Inteligencia para el mercado inmobiliario de la Riviera Maya. Rentas, ventas y administración condominal en una sola plataforma.</p>
     </div>
     <div class="foot-links">
       <a href="https://playamxcrm.vercel.app/privacidad">Privacidad</a>
-      <a href="mailto:zaero.hell@gmail.com">Soporte</a>
+      <a href="mailto:zaero.hell@gmail.com">Contacto</a>
     </div>
   </div>
-  <div class="foot-bot">© 2026 PlayaMXCRM · Playa del Carmen, Quintana Roo, México · Todos los derechos reservados</div>
+  <div class="foot-bot">© 2026 PlayaMXCRM · Playa del Carmen, Quintana Roo, México</div>
 </footer>
 
 <script>
-// ── Barra de progreso de scroll ──
+// ── Barra de progreso (suave) ──
 const prog = document.getElementById('progress');
+let ticking = false;
 addEventListener('scroll', ()=>{
-  const h = document.documentElement.scrollHeight - innerHeight;
-  prog.style.width = (scrollY/h*100)+'%';
+  if(ticking) return;
+  ticking = true;
+  requestAnimationFrame(()=>{
+    const h = document.documentElement.scrollHeight - innerHeight;
+    prog.style.width = (scrollY/h*100)+'%';
+    document.querySelector('nav').style.background = scrollY>40 ? 'rgba(11,15,26,0.9)' : 'rgba(11,15,26,0.7)';
+    ticking = false;
+  });
 },{passive:true});
 
-// ── Nav sólido al hacer scroll ──
-addEventListener('scroll', ()=>{
-  document.querySelector('nav').style.background = scrollY>40 ? 'rgba(0,0,0,0.85)' : 'rgba(0,0,0,0.55)';
-},{passive:true});
-
-// ── Reveal on scroll (entrada de elementos) ──
+// ── Reveal suave (IntersectionObserver) ──
 const io = new IntersectionObserver((es)=>{
   es.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }});
-},{threshold:0.15});
-document.querySelectorAll('[data-anim]').forEach(el=>io.observe(el));
+},{threshold:0.12, rootMargin:'0px 0px -60px 0px'});
+document.querySelectorAll('.rise').forEach(el=>io.observe(el));
 
-// ── Hero: KPIs que suben + gráfica que crece ──
+// ── Hero mockup + KPIs + gráfica ──
+const heroMock = document.getElementById('heroMock');
 const heroIO = new IntersectionObserver((es)=>{
   es.forEach(e=>{
     if(!e.isIntersecting) return;
-    // barras
-    document.getElementById('heroChart')?.classList.add('go');
-    // kpis
-    document.querySelectorAll('[data-kpi]').forEach(el=>{
-      const target = parseInt(el.dataset.kpi,10); let n=0;
-      const step = Math.max(1,Math.ceil(target/35));
-      const tick=()=>{ n+=step; if(n>=target){el.textContent=target;} else {el.textContent=n;requestAnimationFrame(tick);} };
-      tick();
-    });
+    heroMock.classList.add('in');
+    setTimeout(()=>{
+      document.getElementById('heroChart')?.classList.add('go');
+      document.querySelectorAll('[data-kpi]').forEach(el=>{
+        const target = parseFloat(el.dataset.kpi);
+        const isDecimal = el.dataset.kpi.includes('.');
+        let n = 0; const dur = 1400; const t0 = performance.now();
+        const tick = (t)=>{
+          const p = Math.min((t-t0)/dur, 1);
+          const eased = 1 - Math.pow(1-p, 3); // ease-out cubic
+          n = target * eased;
+          el.textContent = isDecimal ? n.toFixed(1) : Math.round(n);
+          if(p<1) requestAnimationFrame(tick);
+        };
+        requestAnimationFrame(tick);
+      });
+    }, 500);
     heroIO.unobserve(e.target);
   });
-},{threshold:0.4});
-const hc = document.getElementById('heroChart'); if(hc) heroIO.observe(hc);
+},{threshold:0.3});
+if(heroMock) heroIO.observe(heroMock);
 
-// ── Contador de stats (enteros y decimales) ──
+// ── Contador de stats (ease-out suave) ──
+function animateCount(el, target, isDecimal){
+  let t0 = performance.now(); const dur = 1600;
+  const tick = (t)=>{
+    const p = Math.min((t-t0)/dur, 1);
+    const eased = 1 - Math.pow(1-p, 3);
+    const n = target * eased;
+    el.textContent = isDecimal ? n.toFixed(1) : Math.round(n);
+    if(p<1) requestAnimationFrame(tick);
+  };
+  requestAnimationFrame(tick);
+}
 const sio = new IntersectionObserver((es)=>{
   es.forEach(e=>{
     if(!e.isIntersecting) return;
     const el = e.target;
-    if(el.dataset.count){
-      const target=parseInt(el.dataset.count,10); let n=0;
-      const step=Math.max(1,Math.ceil(target/40));
-      const tick=()=>{ n+=step; if(n>=target){el.textContent=target;} else {el.textContent=n;requestAnimationFrame(tick);} };
-      tick();
-    } else if(el.dataset.decimal){
-      const target=parseFloat(el.dataset.decimal); let n=0;
-      const step=target/40;
-      const tick=()=>{ n+=step; if(n>=target){el.textContent=target.toFixed(1);} else {el.textContent=n.toFixed(1);requestAnimationFrame(tick);} };
-      tick();
-    }
+    if(el.dataset.count) animateCount(el, parseInt(el.dataset.count,10), false);
+    else if(el.dataset.decimal) animateCount(el, parseFloat(el.dataset.decimal), true);
     sio.unobserve(el);
   });
 },{threshold:0.5});
 document.querySelectorAll('[data-count],[data-decimal]').forEach(c=>sio.observe(c));
 
-// ── Chat MLL que se escribe solo al entrar en viewport ──
+// ── Chat que se escribe (suave) ──
 const chatScript = [
-  {type:'ai', delay:400, html:`Buenos días. Tengo <strong style="color:var(--accent)">3 alertas activas</strong> hoy:<br><br>› A/C sin resolver — Veleta 305 · <span style="color:var(--accent3)">HIGH, 2 días</span><br>› Contrato Xcacel · vence en 60 días<br>› Carlos Medina — PH-A2 · visita hoy 15:00 ✓`},
-  {type:'user', delay:1400, html:`¿Probabilidad real de cerrar con Medina esta semana?`},
-  {type:'ai', delay:1200, html:`Según el modelo de scoring y el historial:<div style="margin-top:12px"><div class="srow"><span class="k">Score predictivo</span><span class="v">74 / 100</span></div><div class="srow"><span class="k">Probabilidad de cierre</span><span class="v">81%</span></div><div class="srow"><span class="k">Señal de compra</span><span class="v hot">HOT 🔥</span></div><div class="srow"><span class="k">Recomendación</span><span class="v">Contactar hoy antes 18h</span></div></div>`}
+  {type:'ai', html:`Buen día. Le comparto el estado de hoy: <strong style="color:var(--accent)">3 asuntos requieren atención</strong>.<br><br>Incidencia en Veleta 305 — <span style="color:var(--gold)">prioridad alta, 2 días</span><br>Contrato Xcacel — vencimiento en 60 días<br>Carlos Medina, PH-A2 — visita hoy 15:00`},
+  {type:'user', html:`¿Qué probabilidad hay de cerrar con Medina esta semana?`},
+  {type:'ai', html:`Con base en el modelo de scoring y el historial de interacción:<div style="margin-top:12px"><div class="srow"><span class="k">Índice predictivo</span><span class="v">74 / 100</span></div><div class="srow"><span class="k">Probabilidad de cierre</span><span class="v">81 %</span></div><div class="srow"><span class="k">Señal de intención</span><span class="v gold">Alta</span></div><div class="srow"><span class="k">Recomendación</span><span class="v">Contactar hoy, antes de las 18:00</span></div></div>`}
 ];
 function typeChat(){
   const body = document.getElementById('chatBody');
@@ -481,26 +570,29 @@ function typeChat(){
   function next(){
     if(i >= chatScript.length) return;
     const m = chatScript[i];
-    // indicador de escritura
-    const typing = document.createElement('div');
-    typing.className = 'cmsg '+m.type;
-    typing.innerHTML = `<div class="av">${m.type==='ai'?'◎':'R'}</div><div class="bub"><div class="typing"><i></i><i></i><i></i></div></div>`;
-    body.appendChild(typing);
-    requestAnimationFrame(()=>typing.classList.add('show'));
+    const el = document.createElement('div');
+    el.className = 'cmsg '+m.type;
+    const avatar = m.type==='ai'
+      ? '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/></svg>'
+      : '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg>';
+    el.innerHTML = `<div class="av">${avatar}</div><div class="bub"><div class="typing"><i></i><i></i><i></i></div></div>`;
+    body.appendChild(el);
+    requestAnimationFrame(()=>el.classList.add('show'));
+    const thinkTime = m.type==='ai' ? 1100 : 650;
     setTimeout(()=>{
-      typing.querySelector('.bub').innerHTML = m.html;
+      el.querySelector('.bub').innerHTML = m.html;
       i++;
-      setTimeout(next, i<chatScript.length?chatScript[i].delay:0);
-    }, m.type==='ai'?900:500);
+      if(i < chatScript.length) setTimeout(next, 700);
+    }, thinkTime);
   }
-  setTimeout(next, chatScript[0].delay);
+  setTimeout(next, 500);
 }
 const chatIO = new IntersectionObserver((es)=>{
   es.forEach(e=>{ if(e.isIntersecting){ typeChat(); chatIO.unobserve(e.target); }});
-},{threshold:0.3});
+},{threshold:0.35});
 const cb = document.getElementById('chatDemo'); if(cb) chatIO.observe(cb);
 
-// ── Cerrar menú móvil al hacer clic ──
+// ── Menú móvil ──
 document.querySelectorAll('#navLinks a').forEach(a=>{
   a.addEventListener('click',()=>document.getElementById('navLinks').classList.remove('open'));
 });

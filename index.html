@@ -1179,5 +1179,125 @@ if(_cf){
   });
 }
 </script>
+
+<!-- PostHog Analytics — cargado de forma diferida, sin bloqueo de render -->
+<script>
+(function(){
+  // ── 1. Cargar PostHog de forma asíncrona ─────────────────────────────────
+  // No bloquea el render principal — se ejecuta después del DOMContentLoaded
+  !function(t,e){var o,n,p,r;e.__SV||(window.posthog=e,e._i=[],e.init=function(i,s,a){function g(t,e){var o=e.split(".");2==o.length&&(t=t[o[0]],e=o[1]);t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}}(p=t.createElement("script")).type="text/javascript",p.crossOrigin="anonymous",p.async=!0,p.src=s.api_host.replace(".i.posthog.com","-assets.i.posthog.com")+"/static/array.js",(r=t.getElementsByTagName("script")[0]).parentNode.insertBefore(p,r);var u=e;for(void 0!==a?u=e[a]=[]:a="posthog",u.people=u.people||[],u.toString=function(t){var e="posthog";return"posthog"!==a&&(e+="."+a),t||(e+=" (stub)"),e},u.people.toString=function(){return u.toString(1)+".people (stub)"},o="init me ws ys qs gs gs+1 capture alias identify once on off reloadFeatureFlags getFeatureFlag isFeatureEnabled".split(" "),n=0;n<o.length;n++)g(u,o[n]);e._i.push([i,s,a])},e.__SV=1)}(document,window.posthog||[]);
+
+  posthog.init('phc_rgyazDKXPW5Ldzf7gXtmtdHxdf7d4dSenurdkbhvs3mi', {
+    api_host:         'https://us.i.posthog.com',
+    ui_host:          'https://us.posthog.com',
+    person_profiles:  'identified_only',   // no crea perfiles anónimos pesados
+    capture_pageview:  false,              // lo hacemos manualmente abajo
+    capture_pageleave: true,
+    autocapture:       false,              // desactivado — usamos eventos manuales
+    disable_session_recording: true,       // sin grabación de sesión (ahorra ancho de banda)
+    loaded: function(ph){
+      // ── 2. Pageview con contexto del landing ───────────────────────────────
+      ph.capture('$pageview', {
+        page:       'playamxcrm_landing',
+        referrer:   document.referrer || 'direct',
+        utm_source:   new URLSearchParams(location.search).get('utm_source'),
+        utm_medium:   new URLSearchParams(location.search).get('utm_medium'),
+        utm_campaign: new URLSearchParams(location.search).get('utm_campaign'),
+      });
+
+      // ── 3. Scroll depth — thresholds 25 / 50 / 75 / 100% ─────────────────
+      var scrollFired = {};
+      var thresholds  = [25, 50, 75, 100];
+      function onScroll(){
+        var pct = Math.round(
+          (window.scrollY + window.innerHeight) /
+          document.documentElement.scrollHeight * 100
+        );
+        thresholds.forEach(function(t){
+          if(pct >= t && !scrollFired[t]){
+            scrollFired[t] = true;
+            ph.capture('scroll_depth', { depth_pct: t, page: 'playamxcrm_landing' });
+          }
+        });
+      }
+      // Throttle: máximo 1 llamada cada 200ms
+      var scrollTimer;
+      window.addEventListener('scroll', function(){
+        if(scrollTimer) return;
+        scrollTimer = setTimeout(function(){ onScroll(); scrollTimer = null; }, 200);
+      }, { passive: true });
+
+      // ── 4. Section visibility — qué secciones leen ────────────────────────
+      var sections = ['mll','crms','alertas','modulos','stats','comparativa','contacto'];
+      var sectionObs = new IntersectionObserver(function(entries){
+        entries.forEach(function(e){
+          if(e.isIntersecting){
+            ph.capture('section_viewed', {
+              section:  e.target.id,
+              page:     'playamxcrm_landing',
+            });
+            sectionObs.unobserve(e.target);
+          }
+        });
+      }, { threshold: 0.35 });
+      sections.forEach(function(id){
+        var el = document.getElementById(id);
+        if(el) sectionObs.observe(el);
+      });
+
+      // ── 5. CTA clicks — event delegation (1 solo listener) ───────────────
+      // Captura clics en: btn-primary, btn-ghost, nav-cta, form-submit,
+      //                   WhatsApp links, mailto links
+      document.body.addEventListener('click', function(e){
+        var el = e.target.closest(
+          '.btn-primary, .btn-ghost, .nav-cta, .form-submit, [href*="wa.link"], [href*="mailto"]'
+        );
+        if(!el) return;
+
+        var label = (el.textContent || '').trim().replace(/\s+/g,' ').slice(0,60);
+        var href  = el.getAttribute('href') || '';
+        var type  = el.classList.contains('btn-primary') ? 'primary'
+                  : el.classList.contains('form-submit')  ? 'form_submit'
+                  : href.includes('wa.link')              ? 'whatsapp'
+                  : href.includes('mailto')               ? 'email'
+                  : 'secondary';
+
+        ph.capture('cta_click', {
+          label:    label,
+          type:     type,
+          href:     href.slice(0,120),
+          section:  (function(){
+            // Find closest section ancestor
+            var s = el.closest('section');
+            return s ? (s.id || 'unknown') : 'nav';
+          })(),
+          page: 'playamxcrm_landing',
+        });
+      });
+
+      // ── 6. Form submit — tracking separado con campos (sin PII) ──────────
+      var form = document.getElementById('contactForm');
+      if(form){
+        form.addEventListener('submit', function(){
+          ph.capture('demo_form_submit', {
+            has_empresa: !!form.querySelector('[name=empresa]')?.value,
+            page: 'playamxcrm_landing',
+          });
+        });
+      }
+
+      // ── 7. Time on page al salir ──────────────────────────────────────────
+      var t0 = Date.now();
+      window.addEventListener('beforeunload', function(){
+        ph.capture('time_on_page', {
+          seconds: Math.round((Date.now() - t0) / 1000),
+          page:    'playamxcrm_landing',
+        });
+      });
+    }
+  });
+})();
+</script>
+
 </body>
 </html>

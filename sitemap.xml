@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
+
+  <!-- Página principal -->
+  <url>
+    <loc>https://playamxcrm.netlify.app/</loc>
+    <lastmod>2026-07-22</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="es-MX" href="https://playamxcrm.netlify.app/"/>
+  </url>
+
+  <!-- Sección: Inteligencia MLL -->
+  <url>
+    <loc>https://playamxcrm.netlify.app/#mll</loc>
+    <lastmod>2026-07-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <!-- Sección: La plataforma -->
+  <url>
+    <loc>https://playamxcrm.netlify.app/#crms</loc>
+    <lastmod>2026-07-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <!-- Sección: Automatización / Alertas -->
+  <url>
+    <loc>https://playamxcrm.netlify.app/#alertas</loc>
+    <lastmod>2026-07-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Sección: 49 módulos operativos -->
+  <url>
+    <loc>https://playamxcrm.netlify.app/#modulos</loc>
+    <lastmod>2026-07-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Sección: Estadísticas / Respaldo técnico -->
+  <url>
+    <loc>https://playamxcrm.netlify.app/#stats</loc>
+    <lastmod>2026-07-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <!-- Sección: Comparativa -->
+  <url>
+    <loc>https://playamxcrm.netlify.app/#comparativa</loc>
+    <lastmod>2026-07-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Sección: Contacto / Demo -->
+  <url>
+    <loc>https://playamxcrm.netlify.app/#contacto</loc>
+    <lastmod>2026-07-22</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+</urlset>

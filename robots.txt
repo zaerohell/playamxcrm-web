@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+
+# Bloquear archivos de generación internos
+Disallow: /gen_og.js
+Disallow: /gen_favicon.js
+
+# Sitemap
+Sitemap: https://playamxcrm.netlify.app/sitemap.xml
